@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django_celery_beat",  # Celery beat scheduler
     "orders",
+
+    "anymail",
 ]
 
 MIDDLEWARE = [
@@ -136,13 +138,21 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Email setup
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = os.environ.get("EMAIL_HOST", "smtp.gmail.com")
-EMAIL_PORT = int(os.environ.get("EMAIL_PORT", "587"))
-EMAIL_USE_TLS = os.environ.get("EMAIL_USE_TLS", "True") == "True"
-EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", "yourgmail@gmail.com")
-EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "your-app-password")
-DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", EMAIL_HOST_USER)
+EMAIL_BACKEND = "anymail.backends.postmark.EmailBackend"
+# EMAIL_HOST = os.environ.get("EMAIL_HOST", "smtp.gmail.com")
+# EMAIL_PORT = int(os.environ.get("EMAIL_PORT", "587"))
+# EMAIL_USE_TLS = os.environ.get("EMAIL_USE_TLS", "True") == "True"
+# EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", "yourgmail@gmail.com")
+# EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "your-app-password")
+DEFAULT_FROM_EMAIL = "Silly Notifications <notifications@sillysongshop.com>"
+SERVER_EMAIL = "Silly Notifications <notifications@sillysongshop.com>"
+
+
+postmark_api_key = "0cfef6f2-9112-4d01-bdfb-600ee8bf859e"
+
+ANYMAIL = {
+    "POSTMARK_SERVER_TOKEN": postmark_api_key,
+}
 
 # Stripe Configuration
 # Use dev keys in DEBUG mode, live keys in production
