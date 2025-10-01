@@ -87,8 +87,9 @@ def stripe_webhook(request):
             print(f"DEBUG: Order {order_id} marked as paid")
             
             # Send confirmation email
-            from .utils import send_payment_confirmation_email
+            from .utils import send_payment_confirmation_email, send_discord_notification
             send_payment_confirmation_email(order)
+            send_discord_notification(order)
             
         except Order.DoesNotExist:
             print(f"DEBUG: Order {order_id} not found")
@@ -108,8 +109,9 @@ def payment_success(request):
                 print(f"DEBUG: Order {order.id} marked as paid from success page")
                 
                 # Send confirmation email
-                from .utils import send_payment_confirmation_email
+                from .utils import send_payment_confirmation_email, send_discord_notification
                 send_payment_confirmation_email(order)
+                send_discord_notification(order)
             else:
                 print(f"DEBUG: Order {order.id} already paid")
         except Order.DoesNotExist:

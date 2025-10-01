@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +21,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-%-=k3lcalu@83m3juo-4c*_ry8@o^kdshups1s@f_f@r$zfk2x"
+SECRET_KEY = os.environ.get("DJ_SECRET_KEY", "django-insecure-%-=k3lcalu@83m3juo-4c*_ry8@o^kdshups1s@f_f@r$zfk2x")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DEBUG", "True") == "True"
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "localhost 127.0.0.1").split()
+CSRF_TRUSTED_ORIGINS = os.environ.get("CSRF_TRUSTED_ORIGINS", "http://localhost:8000 http://127.0.0.1:8000").split()
 
 
 # Application definition
@@ -37,7 +39,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "orders",  # <-- add this
+    "django_celery_beat",  # Celery beat scheduler
+    "orders",
 ]
 
 MIDDLEWARE = [
@@ -76,8 +79,12 @@ WSGI_APPLICATION = "weirdsongfactory.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
+        "NAME": os.environ.get("SQL_DATABASE", os.path.join(BASE_DIR, "db.sqlite3")),
+        "USER": os.environ.get("SQL_USER", "user"),
+        "PASSWORD": os.environ.get("SQL_PASSWORD", "password"),
+        "HOST": os.environ.get("SQL_HOST", "localhost"),
+        "PORT": os.environ.get("SQL_PORT", "5432"),
     }
 }
 
@@ -128,16 +135,35 @@ MEDIA_ROOT = BASE_DIR / "assets"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# Email setup (for Gmail SMTP)
+# Email setup
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = "yourgmail@gmail.com"  # Replace with your Gmail
-EMAIL_HOST_PASSWORD = "your-app-password"  # Use Gmail App Password
+EMAIL_HOST = os.environ.get("EMAIL_HOST", "smtp.gmail.com")
+EMAIL_PORT = int(os.environ.get("EMAIL_PORT", "587"))
+EMAIL_USE_TLS = os.environ.get("EMAIL_USE_TLS", "True") == "True"
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", "yourgmail@gmail.com")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "your-app-password")
+DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", EMAIL_HOST_USER)
 
 # Stripe Configuration
-STRIPE_PUBLISHABLE_KEY = 'pk_test_51PYbnAIcJ6UNmQ4yw1Qa9oarZiCSDsztRvrjJmCSimfszIf30LxB01YbWw88wSF97kLoysqfAfjJ9O1n8NRnJomz00KNXzYF95'
-STRIPE_SECRET_KEY = 'sk_test_51PYbnAIcJ6UNmQ4yK09EHvFtugDRkh3Uj11fbDTLjmbAQ8CRP0JGX9CCvT3LLVMePOPh47arjws7jBOuqRCiUrio00tEoo1GvY'
-STRIPE_PRICE_ID = 'price_1234567890'  # You'll need to create a price in Stripe dashboard
-STRIPE_WEBHOOK_SECRET = 'whsec_your_webhook_secret_here'  # You'll need to get this from Stripe dashboard
+STRIPE_PUBLISHABLE_KEY = os.environ.get('STRIPE_PUBLISHABLE_KEY', 'pk_test_51PYbnAIcJ6UNmQ4yw1Qa9oarZiCSDsztRvrjJmCSimfszIf30LxB01YbWw88wSF97kLoysqfAfjJ9O1n8NRnJomz00KNXzYF95')
+STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY', 'sk_test_51PYbnAIcJ6UNmQ4yK09EHvFtugDRkh3Uj11fbDTLjmbAQ8CRP0JGX9CCvT3LLVMePOPh47arjws7jBOuqRCiUrio00tEoo1GvY')
+STRIPE_PRICE_ID = os.environ.get('STRIPE_PRICE_ID', 'price_1234567890')
+STRIPE_WEBHOOK_SECRET = os.environ.get('STRIPE_WEBHOOK_SECRET', 'whsec_your_webhook_secret_here')
+
+# Celery Configuration
+CELERY_BROKER_URL = os.environ.get("CELERY_BROKER", "redis://127.0.0.1:6379/0")
+CELERY_RESULT_BACKEND = os.environ.get("CELERY_BACKEND", "redis://127.0.0.1:6379/0")
+CELERY_TIMEZONE = 'UTC'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+
+# Celery Beat Schedule (for scheduled tasks)
+CELERY_BEAT_SCHEDULE = {
+    # Add your scheduled tasks here
+    # Example:
+    # 'task-name': {
+    #     'task': 'app.tasks.task_name',
+    #     'schedule': crontab(minute=0, hour='*/1'),
+    # },
+}

@@ -1,0 +1,46 @@
+#!/bin/bash
+
+set -o errexit
+set -o pipefail
+set -o nounset
+
+# Wait for django_celery_beat tables to exist
+wait_for_celery_beat_tables() {
+python << END
+import sys
+import os
+import time
+import django
+
+# Setup Django
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'weirdsongfactory.settings')
+django.setup()
+
+from django.db import connection
+
+print("Waiting for django_celery_beat tables to be created...")
+
+while True:
+    try:
+        with connection.cursor() as cursor:
+            # Check if the django_celery_beat_crontabschedule table exists
+            cursor.execute("""
+                SELECT 1 FROM information_schema.tables
+                WHERE table_name = 'django_celery_beat_crontabschedule'
+                AND table_schema = 'public'
+            """)
+            if cursor.fetchone():
+                print("django_celery_beat tables are ready!")
+                sys.exit(0)
+    except Exception as e:
+        pass
+
+    time.sleep(2)
+    print("Still waiting for django_celery_beat tables...")
+
+END
+}
+
+wait_for_celery_beat_tables
+
+exec celery -A weirdsongfactory beat -l INFO --scheduler django_celery_beat.schedulers:DatabaseScheduler
