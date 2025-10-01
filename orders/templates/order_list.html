@@ -1,23 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Management - Silly Song Shop</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
+{% extends "base.html" %}
+
+{% block title %}Order Management - Silly Song Shop{% endblock %}
+
+{% block body_style %}
+background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+min-height: 100vh;
+padding: 20px;
+{% endblock %}
+
+{% block extra_styles %}
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -270,9 +261,9 @@
                 min-width: auto;
             }
         }
-    </style>
-</head>
-<body>
+{% endblock %}
+
+{% block content %}
     <div class="container">
         <div class="header">
             <h1 class="title">🎵 Order Management</h1>
@@ -428,5 +419,4 @@
             </div>
         {% endif %}
     </div>
-</body>
-</html>
+{% endblock %}

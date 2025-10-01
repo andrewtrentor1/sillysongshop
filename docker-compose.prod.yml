@@ -1,15 +1,36 @@
 services:
+  nginx:
+    build: ./compose/prod/nginx
+    volumes:
+      - staticfiles:/app/staticfiles
+      - mediafiles:/app/mediafiles
+      - /etc/letsencrypt/live/sillysongshop.com/fullchain.pem:/etc/nginx/ssl/fullchain.pem
+      - /etc/letsencrypt/live/sillysongshop.com/privkey.pem:/etc/nginx/ssl/privkey.pem
+    ports:
+      - "443:443/tcp"
+      - "443:443/udp"  # HTTP/3 QUIC
+      - "80:80"
+      - "5555:5555/tcp"
+      - "5555:5555/udp"  # HTTP/3 QUIC for Flower
+    depends_on:
+      - web
+      - flower
+    # Enable IPv6
+    networks:
+      - default
+    sysctls:
+      - net.ipv6.conf.all.disable_ipv6=0
+
   web:
     build:
       context: .
       dockerfile: ./compose/prod/django/Dockerfile
-    image: sillysongshop_web_prod
     command: /start
+    hostname: sillysongshop
     volumes:
-      - static_volume:/app/staticfiles
-      - media_volume:/app/mediafiles
-    expose:
-      - 8000
+      - staticfiles:/app/staticfiles
+      - mediafiles:/app/mediafiles
+      - logs:/app/logs
     env_file:
       - ./env/.prod
     depends_on:
@@ -30,57 +51,58 @@ services:
     build:
       context: .
       dockerfile: ./compose/prod/django/Dockerfile
-    image: sillysongshop_celery_worker_prod
+    image: sillysongshop_celery_worker
     command: /start-celeryworker
+    volumes:
+      - staticfiles:/app/staticfiles
+      - mediafiles:/app/mediafiles
+      - logs:/app/logs
     env_file:
       - ./env/.prod
     depends_on:
       - redis
       - db
-      - web
 
   celery_beat:
     build:
       context: .
       dockerfile: ./compose/prod/django/Dockerfile
-    image: sillysongshop_celery_beat_prod
+    image: sillysongshop_celery_beat
     command: /start-celerybeat
+    volumes:
+      - staticfiles:/app/staticfiles
+      - mediafiles:/app/mediafiles
+      - logs:/app/logs
     env_file:
       - ./env/.prod
     depends_on:
       - redis
       - db
-      - web
 
   flower:
     build:
       context: .
       dockerfile: ./compose/prod/django/Dockerfile
-    image: sillysongshop_celery_flower_prod
+    image: sillysongshop_celery_flower
     command: /start-flower
+    volumes:
+      - staticfiles:/app/staticfiles
+      - mediafiles:/app/mediafiles
     env_file:
       - ./env/.prod
-    expose:
-      - 5555
     depends_on:
       - redis
       - db
 
-  nginx:
-    build:
-      context: ./compose/prod/nginx
-    volumes:
-      - static_volume:/app/staticfiles
-      - media_volume:/app/mediafiles
-      - ./ssl:/etc/nginx/ssl  # Mount SSL certificates
-    ports:
-      - "80:80"
-      - "443:443"
-      - "5555:5555"  # Flower
-    depends_on:
-      - web
-
 volumes:
   postgres_data:
-  static_volume:
-  media_volume:
+  staticfiles:
+  mediafiles:
+  logs:
+
+networks:
+  default:
+    enable_ipv6: true
+    driver: bridge
+    driver_opts:
+      com.docker.network.enable_ipv6: "true"

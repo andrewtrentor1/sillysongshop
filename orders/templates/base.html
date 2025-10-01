@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+
+    <link rel="icon" type="image/png" href="/static/favicon-96x96.png" sizes="96x96"/>
+    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg"/>
+    <link rel="shortcut icon" href="/static/favicon.ico"/>
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.png"/>
+    <meta name="apple-mobile-web-app-title" content="SillySongShop"/>
+    <link rel="manifest" href="/static/site.webmanifest"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Silly Song Shop 🎶{% endblock %}</title>
+    {% block extra_head %}{% endblock %}
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+        {% block body_style %}
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            min-height: 100vh;
+            padding: 20px;
+        {% endblock %}
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 50px 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e1e5e9;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .title {
+            font-size: 2.8rem;
+            color: #FF0096;
+            margin-bottom: 20px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .subtitle {
+            font-size: 1.4rem;
+            color: #4A5568;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #ffffff;
+            transition: all 0.2s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #FF0096;
+            box-shadow: 0 0 0 3px rgba(255, 0, 150, 0.1);
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            color: #FF0096;
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+
+        .btn, .submit-btn {
+            background: linear-gradient(135deg, #FF0096 0%, #FF7800 100%);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            box-shadow: 0 4px 12px rgba(255, 0, 150, 0.3);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:hover, .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(255, 0, 150, 0.4);
+        }
+
+        .back-link {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .back-link a {
+            color: #FF0096;
+            text-decoration: none;
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                background: linear-gradient(135deg, #FF0096 0%, #FF7800 100%);
+                padding: 10px;
+            }
+
+            .container {
+                padding: 50px 5px;
+                margin: 0;
+                border-radius: 8px;
+            }
+
+            .title {
+                font-size: 2rem;
+                line-height: 1.2;
+            }
+
+            .subtitle {
+                font-size: 1.1rem;
+                line-height: 1.4;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 50px 5px;
+            }
+
+            .title {
+                font-size: 1.8rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+        }
+
+        {% block extra_styles %}{% endblock %}
+    </style>
+</head>
+<body>
+{% block content %}{% endblock %}
+</body>
+</html>

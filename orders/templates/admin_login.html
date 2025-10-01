@@ -1,116 +1,88 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login - Silly Song Shop</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        
-        .login-container {
-            background: #ffffff;
-            border-radius: 12px;
-            padding: 40px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            text-align: center;
-            max-width: 400px;
-            width: 100%;
-        }
-        
-        .title {
-            font-size: 2rem;
-            color: #FF0096;
-            margin-bottom: 20px;
-            font-weight: 700;
-        }
-        
-        .subtitle {
-            color: #666;
-            margin-bottom: 30px;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-            text-align: left;
-        }
-        
-        label {
-            display: block;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 8px;
-        }
-        
-        input[type="password"] {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: border-color 0.2s ease;
-        }
-        
-        input[type="password"]:focus {
-            outline: none;
-            border-color: #FF0096;
-        }
-        
-        .login-btn {
-            background: linear-gradient(135deg, #FF0096 0%, #FF7800 100%);
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            font-size: 16px;
-            font-weight: 600;
-            border-radius: 8px;
-            cursor: pointer;
-            width: 100%;
-            transition: transform 0.2s ease;
-        }
-        
-        .login-btn:hover {
-            transform: translateY(-2px);
-        }
-        
-        .back-link {
-            margin-top: 20px;
-        }
-        
-        .back-link a {
-            color: #FF0096;
-            text-decoration: none;
-        }
-        
-        .back-link a:hover {
-            text-decoration: underline;
-        }
-        
-        .error {
-            background: #fee;
-            color: #c33;
-            padding: 10px;
-            border-radius: 6px;
-            margin-bottom: 20px;
-            border: 1px solid #fcc;
-        }
-    </style>
-</head>
-<body>
-    <div class="login-container">
+{% extends "base.html" %}
+
+{% block title %}Admin Login - Silly Song Shop{% endblock %}
+
+{% block body_style %}
+background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+min-height: 100vh;
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 20px;
+{% endblock %}
+
+{% block extra_styles %}
+.login-container {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+}
+
+.title {
+    font-size: 2rem;
+}
+
+.subtitle {
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+label {
+    color: #333;
+}
+
+input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.2s ease;
+}
+
+input[type="password"]:focus {
+    outline: none;
+    border-color: #FF0096;
+}
+
+.login-btn {
+    background: linear-gradient(135deg, #FF0096 0%, #FF7800 100%);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    transition: transform 0.2s ease;
+}
+
+.login-btn:hover {
+    transform: translateY(-2px);
+}
+
+.error {
+    background: #fee;
+    color: #c33;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    border: 1px solid #fcc;
+}
+{% endblock %}
+
+{% block content %}
+<div class="login-container">
         <h1 class="title">🔐 Admin Access</h1>
         <p class="subtitle">Enter password to view orders</p>
         
@@ -133,5 +105,4 @@
             <a href="/">← Back to Silly Song Shop</a>
         </div>
     </div>
-</body>
-</html>
+{% endblock %}

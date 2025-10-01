@@ -1,138 +1,116 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout - Silly Song Shop</title>
-    <script src="https://js.stripe.com/v3/"></script>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            min-height: 100vh;
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .checkout-container {
-            max-width: 500px;
-            background: #ffffff;
-            border-radius: 12px;
-            padding: 40px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-        
-        .title {
-            font-size: 2rem;
-            color: #FF0096;
-            margin-bottom: 20px;
-            font-weight: 700;
-        }
-        
-        .order-summary {
-            background: #f8f9fa;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 30px;
-            text-align: left;
-        }
-        
-        .order-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 10px;
-        }
-        
-        .order-details {
-            color: #666;
-            margin-bottom: 5px;
-        }
-        
-        .price {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #FF0096;
-            margin: 20px 0;
-        }
-        
-        .payment-form {
-            margin-top: 30px;
-        }
-        
-        #card-element {
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-        
-        #card-element:focus {
-            border-color: #FF0096;
-            outline: none;
-        }
-        
-        .payment-btn {
-            background: linear-gradient(135deg, #FF0096 0%, #FF7800 100%);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            border-radius: 8px;
-            cursor: pointer;
-            width: 100%;
-            transition: transform 0.2s ease;
-        }
-        
-        .payment-btn:hover {
-            transform: translateY(-2px);
-        }
-        
-        .payment-btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-        
-        .error-message {
-            color: #dc3545;
-            margin-top: 10px;
-            font-size: 0.9rem;
-        }
-        
-        .back-link {
-            margin-top: 20px;
-        }
-        
-        .back-link a {
-            color: #FF0096;
-            text-decoration: none;
-        }
-        
-        .back-link a:hover {
-            text-decoration: underline;
-        }
-        
-        .loading {
-            display: none;
-        }
-        
-        .loading.show {
-            display: inline-block;
-        }
-    </style>
-</head>
-<body>
-    <div class="checkout-container">
+{% extends "base.html" %}
+
+{% block title %}Checkout - Silly Song Shop{% endblock %}
+
+{% block extra_head %}
+<script src="https://js.stripe.com/v3/"></script>
+{% endblock %}
+
+{% block body_style %}
+background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+min-height: 100vh;
+padding: 20px;
+display: flex;
+align-items: center;
+justify-content: center;
+{% endblock %}
+
+{% block extra_styles %}
+.checkout-container {
+    max-width: 500px;
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.title {
+    font-size: 2rem;
+}
+
+.order-summary {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 30px;
+    text-align: left;
+}
+
+.order-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.order-details {
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #FF0096;
+    margin: 20px 0;
+}
+
+.payment-form {
+    margin-top: 30px;
+}
+
+#card-element {
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+#card-element:focus {
+    border-color: #FF0096;
+    outline: none;
+}
+
+.payment-btn {
+    background: linear-gradient(135deg, #FF0096 0%, #FF7800 100%);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    transition: transform 0.2s ease;
+}
+
+.payment-btn:hover {
+    transform: translateY(-2px);
+}
+
+.payment-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.error-message {
+    color: #dc3545;
+    margin-top: 10px;
+    font-size: 0.9rem;
+}
+
+.loading {
+    display: none;
+}
+
+.loading.show {
+    display: inline-block;
+}
+{% endblock %}
+
+{% block content %}
+<div class="checkout-container">
         <h1 class="title">🎵 Complete Your Order</h1>
         
         <div class="order-summary">
@@ -216,5 +194,4 @@
             }
         });
     </script>
-</body>
-</html>
+{% endblock %}

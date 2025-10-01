@@ -1,127 +1,99 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment Successful! - Silly Song Shop</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #FF0096 0%, #FF7800 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 600px;
-            background: #F8F9ED;
-            border-radius: 12px;
-            padding: 60px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            text-align: center;
-            border: 1px solid #e1e5e9;
-        }
-        
-        .celebration {
-            font-size: 4rem;
-            margin-bottom: 30px;
-        }
-        
-        .title {
-            font-size: 2.5rem;
-            color: #FF0096;
-            margin-bottom: 30px;
-            font-weight: 700;
-        }
-        
-        .message {
-            font-size: 1.2rem;
-            color: #4A5568;
-            line-height: 1.6;
-            margin-bottom: 30px;
-        }
-        
-        .order-info {
-            background: #f8f9fa;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 30px;
-            text-align: left;
-        }
-        
-        .order-info h3 {
-            color: #FF0096;
-            margin-bottom: 15px;
-            font-size: 1.3rem;
-            font-weight: 600;
-        }
-        
-        .next-steps {
-            background: #e8f5e8;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .next-steps h3 {
-            color: #28a745;
-            margin-bottom: 15px;
-            font-size: 1.3rem;
-            font-weight: 600;
-        }
-        
-        .next-steps ul {
-            text-align: left;
-            color: #155724;
-        }
-        
-        .next-steps li {
-            margin-bottom: 8px;
-        }
-        
-        .cta-button {
-            background: linear-gradient(135deg, #FF0096 0%, #FF7800 100%);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            border-radius: 8px;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            transition: transform 0.2s ease;
-        }
-        
-        .cta-button:hover {
-            transform: translateY(-2px);
-        }
-        
-        .back-link {
-            margin-top: 20px;
-        }
-        
-        .back-link a {
-            color: #FF0096;
-            text-decoration: none;
-        }
-        
-        .back-link a:hover {
-            text-decoration: underline;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
+{% extends "base.html" %}
+
+{% block title %}Payment Successful! - Silly Song Shop{% endblock %}
+
+{% block body_style %}
+background: linear-gradient(135deg, #FF0096 0%, #FF7800 100%);
+min-height: 100vh;
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 20px;
+{% endblock %}
+
+{% block extra_styles %}
+.container {
+    max-width: 600px;
+    background: #F8F9ED;
+    padding: 60px;
+    text-align: center;
+}
+
+.celebration {
+    font-size: 4rem;
+    margin-bottom: 30px;
+}
+
+.title {
+    font-size: 2.5rem;
+}
+
+.message {
+    font-size: 1.2rem;
+    color: #4A5568;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.order-info {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 30px;
+    text-align: left;
+}
+
+.order-info h3 {
+    color: #FF0096;
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.next-steps {
+    background: #e8f5e8;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+.next-steps h3 {
+    color: #28a745;
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.next-steps ul {
+    text-align: left;
+    color: #155724;
+}
+
+.next-steps li {
+    margin-bottom: 8px;
+}
+
+.cta-button {
+    background: linear-gradient(135deg, #FF0096 0%, #FF7800 100%);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: transform 0.2s ease;
+}
+
+.cta-button:hover {
+    transform: translateY(-2px);
+}
+{% endblock %}
+
+{% block content %}
+<div class="container">
         <div class="celebration">🎉🎶💳</div>
         <h1 class="title">Payment Successful! 🎵</h1>
         <p class="message">Awesome! Your payment has been processed and your order is confirmed! 🎤</p>
@@ -147,5 +119,4 @@
             <a href="{% url 'order_song' %}">← Back to Silly Song Shop</a>
         </div>
     </div>
-</body>
-</html>
+{% endblock %}
