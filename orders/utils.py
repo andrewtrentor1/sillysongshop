@@ -14,7 +14,7 @@ We hope it brings lots of laughs and smiles! 🎉
 
 Best,
 The Silly Song Shop Team 🎶""",
-            from_email=settings.EMAIL_HOST_USER or 'noreply@sillysongshop.com',
+            from_email=settings.EMAIL_HOST_USER or 'Silly Notifications <noreply@sillysongshop.com>',
             recipient_list=[order.email],
             fail_silently=True,  # Don't crash if email fails
         )
@@ -34,6 +34,7 @@ Great news! Your payment has been confirmed and your order is now being processe
 Order Details:
 - Song Title: {order.title}
 - Occasion: {order.get_occasion_display()}
+- Your Details: {order.lyrics}
 - Status: Processing
 
 Our team is working on your custom song and you'll receive it via email within 1 hour!
@@ -42,7 +43,7 @@ Thanks for choosing Silly Song Shop! 🎶
 
 Best,
 The Silly Song Shop Team 🎵""",
-            from_email=settings.EMAIL_HOST_USER or 'noreply@sillysongshop.com',
+            from_email=settings.EMAIL_HOST_USER or 'Silly Notifications <noreply@sillysongshop.com>',
             recipient_list=[order.email],
             fail_silently=True,  # Don't crash if email fails
         )

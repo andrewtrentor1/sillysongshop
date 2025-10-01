@@ -12,6 +12,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Silly Song Shop 🎶{% endblock %}</title>
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{% block og_url %}{{ request.build_absolute_uri }}{% endblock %}">
+    <meta property="og:title" content="{% block og_title %}Silly Song Shop 🎶 - Custom Silly Songs for Any Occasion{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Weird, fun songs that make your family and friends smile! From birthdays to roasts to random surprises - we turn your ideas into custom silly songs delivered within 1 hour.{% endblock %}">
+    <meta property="og:image" content="{% block og_image %}{{ request.scheme }}://{{ request.get_host }}/static/og-image.png{% endblock %}">
+    <meta property="og:site_name" content="Silly Song Shop">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="{% block twitter_url %}{{ request.build_absolute_uri }}{% endblock %}">
+    <meta property="twitter:title" content="{% block twitter_title %}Silly Song Shop 🎶 - Custom Silly Songs for Any Occasion{% endblock %}">
+    <meta property="twitter:description" content="{% block twitter_description %}Weird, fun songs that make your family and friends smile! From birthdays to roasts to random surprises - we turn your ideas into custom silly songs delivered within 1 hour.{% endblock %}">
+    <meta property="twitter:image" content="{% block twitter_image %}{{ request.scheme }}://{{ request.get_host }}/static/og-image.png{% endblock %}">
+
     {% block extra_head %}{% endblock %}
     <style>
         * {
