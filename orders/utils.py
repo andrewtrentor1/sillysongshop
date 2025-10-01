@@ -25,6 +25,9 @@ The Silly Song Shop Team 🎶""",
 
 def send_payment_confirmation_email(order):
     try:
+        # Indent the lyrics for better formatting
+        indented_lyrics = '\n  '.join(order.lyrics.split('\n'))
+
         send_mail(
             subject="Payment Confirmed - Your Order is Processing! 🎵",
             message=f"""Hi there! 🎤
@@ -34,8 +37,10 @@ Great news! Your payment has been confirmed and your order is now being processe
 Order Details:
 - Song Title: {order.title}
 - Occasion: {order.get_occasion_display()}
-- Your Details: {order.lyrics}
 - Status: Processing
+
+Your Details:
+  {indented_lyrics}
 
 Our team is working on your custom song and you'll receive it via email within 1 hour!
 
