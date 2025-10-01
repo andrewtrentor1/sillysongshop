@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Silly Song Shop 🎶</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 50px 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 1px solid #e1e5e9;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .title {
+            font-size: 2.8rem;
+            color: #FF0096;
+            margin-bottom: 20px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .subtitle {
+            font-size: 1.4rem;
+            color: #4A5568;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+        
+        .how-it-works {
+            background: transparent;
+            border-radius: 12px;
+            padding: 40px 0;
+            margin-bottom: 50px;
+            border: none;
+        }
+        
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .step {
+            text-align: center;
+            padding: 25px;
+            background: #ffffff;
+            border-radius: 8px;
+            border: 1px solid #e1e5e9;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .step:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .step-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .form-container {
+            background: transparent;
+            border-radius: 12px;
+            padding: 40px 0;
+            border: none;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #ffffff;
+            transition: all 0.2s ease;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #FF0096;
+            box-shadow: 0 0 0 3px rgba(255, 0, 150, 0.1);
+        }
+        
+        label {
+            display: block;
+            font-weight: 600;
+            color: #FF0096;
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, #FF0096 0%, #FF7800 100%);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            box-shadow: 0 4px 12px rgba(255, 0, 150, 0.3);
+            width: 100%;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(255, 0, 150, 0.4);
+        }
+        
+        .faq {
+            margin-top: 50px;
+            background: transparent;
+            border-radius: 12px;
+            padding: 40px 0;
+            border: none;
+        }
+        
+        .faq h3 {
+            color: #FF0096;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .faq-item {
+            margin-bottom: 20px;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .faq-question {
+            font-weight: 600;
+            color: #FF0096;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+        
+        .faq-answer {
+            color: #5a6c7d;
+            line-height: 1.5;
+        }
+        
+        .demo-songs {
+            margin-top: 50px;
+            background: transparent;
+            border-radius: 12px;
+            padding: 40px 0;
+            border: none;
+        }
+        
+        .demo-songs h3 {
+            color: #FF0096;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .songs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .song-item {
+            background: #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid #e1e5e9;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .song-title {
+            font-weight: 600;
+            color: #FF0096;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .song-description {
+            color: #5a6c7d;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+        
+        .audio-player {
+            width: 100%;
+            height: 40px;
+            border-radius: 6px;
+        }
+        
+        .audio-player::-webkit-media-controls-panel {
+            background-color: #f8f9fa;
+        }
+        
+        .dynamic-questions {
+            margin-top: 30px;
+            padding: 0;
+            background: transparent;
+            border: none;
+            display: block;
+        }
+        
+        .dynamic-questions.show {
+            display: block;
+        }
+        
+        .question-group {
+            margin-bottom: 20px;
+        }
+        
+        .question-group label {
+            font-weight: 600;
+            color: #FF0096;
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        .question-group input,
+        .question-group select,
+        .question-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #ffffff;
+            transition: all 0.2s ease;
+        }
+        
+        .question-group input:focus,
+        .question-group select:focus,
+        .question-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                background: linear-gradient(135deg, #FF0096 0%, #FF7800 100%);
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 50px 5px;
+                margin: 0;
+                border-radius: 8px;
+            }
+            
+            .how-it-works {
+                padding: 40px 5px;
+            }
+            
+            .form-container {
+                padding: 40px 5px;
+            }
+            
+            .demo-songs {
+                padding: 40px 5px;
+            }
+            
+            .faq {
+                padding: 40px 5px;
+            }
+            
+            .title {
+                font-size: 2rem;
+                line-height: 1.2;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+                line-height: 1.4;
+            }
+            
+            .how-it-works {
+                padding: 25px 20px;
+                margin-bottom: 30px;
+            }
+            
+            .how-it-works h2 {
+                font-size: 1.5rem;
+                margin-bottom: 20px;
+            }
+            
+            .steps {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .step {
+                padding: 20px 5px;
+            }
+            
+            .step h3 {
+                font-size: 1.1rem;
+            }
+            
+            .form-container {
+                padding: 25px 20px;
+            }
+            
+            .form-container h2 {
+                font-size: 1.6rem;
+                margin-bottom: 20px;
+            }
+            
+            .form-group {
+                margin-bottom: 20px;
+            }
+            
+            .form-control {
+                padding: 12px 14px;
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+            
+            .submit-btn {
+                padding: 18px 24px;
+                font-size: 1.1rem;
+            }
+            
+            .demo-songs {
+                padding: 25px 20px;
+                margin-top: 30px;
+            }
+            
+            .demo-songs h3 {
+                font-size: 1.5rem;
+                margin-bottom: 20px;
+            }
+            
+            .songs-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .song-item {
+                padding: 5px;
+            }
+            
+            .song-title {
+                font-size: 1rem;
+            }
+            
+            .song-description {
+                font-size: 0.85rem;
+                margin-bottom: 12px;
+            }
+            
+            .faq {
+                padding: 25px 20px;
+                margin-top: 30px;
+            }
+            
+            .faq h3 {
+                font-size: 1.5rem;
+                margin-bottom: 20px;
+            }
+            
+            .faq-item {
+                padding: 5px;
+                margin-bottom: 15px;
+            }
+            
+            .faq-question {
+                font-size: 1rem;
+            }
+            
+            .faq-answer {
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 50px 5px;
+            }
+            
+            .how-it-works {
+                padding: 40px 5px;
+            }
+            
+            .form-container {
+                padding: 40px 5px;
+            }
+            
+            .demo-songs {
+                padding: 40px 5px;
+            }
+            
+            .faq {
+                padding: 40px 5px;
+            }
+            
+            .title {
+                font-size: 1.8rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .how-it-works {
+                padding: 20px 5px;
+            }
+            
+            .form-container {
+                padding: 20px 5px;
+            }
+            
+            .demo-songs {
+                padding: 20px 5px;
+            }
+            
+            .faq {
+                padding: 20px 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">Silly Song Shop 🎶</h1>
+            <p class="subtitle">Weird, Fun Songs That Make Your Family and Friends Smile 🎤</p>
+            <p>From birthdays to roasts to totally random surprises — we turn your ideas into custom silly songs that will make everyone laugh (and maybe cry a little too).</p>
+        </div>
+        
+        <div class="how-it-works">
+            <h2 style="text-align: center; color: #FF0096; margin-bottom: 20px; font-size: 1.8rem; font-weight: 700; text-shadow: 2px 2px 4px rgba(0,0,0,0.1);">🌟 How It Works</h2>
+            <div style="text-align: center; margin-bottom: 30px;">
+                <span style="background: linear-gradient(135deg, #FF0096 0%, #FF7800 100%); color: white; padding: 10px 16px; border-radius: 25px; font-weight: 600; font-size: 0.85rem; box-shadow: 0 4px 12px rgba(255, 0, 150, 0.3); display: inline-block; max-width: 90%; word-wrap: break-word;">⚡ Delivery within 1 hour guaranteed</span>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-icon">✏️</div>
+                    <h3>Tell us your story</h3>
+                    <p>Fill out the form with your lyrics, inside jokes, or random weird ideas.</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">🎵</div>
+                    <h3>We make it musical</h3>
+                    <p>Our team of quirky music-makers turns your words into a real song.</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">📩</div>
+                    <h3>Surprise & share</h3>
+                    <p>We send you the finished track by email, ready to make someone smile.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-container">
+            <h2 style="text-align: center; color: #FF0096; margin-bottom: 30px; font-size: 2rem;">🎤 Order Your Weird Song</h2>
+            <p style="text-align: center; margin-bottom: 30px; color: #666;">Fill this out, and we'll take it from here.</p>
+            
+            {% if messages %}
+                {% for message in messages %}
+                    <div style="background: #f8d7da; color: #721c24; padding: 10px; border-radius: 6px; margin-bottom: 20px; border: 1px solid #f5c6cb;">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+            
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="{{ form.title.id_for_label }}">🎵 Song Title</label>
+                    {{ form.title }}
+                </div>
+                
+                <div class="form-group">
+                    <label for="{{ form.occasion.id_for_label }}">🎂 Occasion</label>
+                    {{ form.occasion }}
+                </div>
+                
+                <div class="form-group">
+                    <label>📧 Your Email</label>
+                    <input type="email" name="email" placeholder="you@example.com" class="form-control" required>
+                </div>
+                
+                <!-- Dynamic Questions Section -->
+                <div id="dynamic-questions" class="dynamic-questions" style="display: block !important;">
+                    
+                    <!-- Child's Birthday Questions -->
+                    <div id="child_birthday-questions" class="occasion-questions" style="display: block;">
+                        <div class="question-group">
+                            <label>👶 Child's name</label>
+                            <input type="text" name="child_name" placeholder="Enter the birthday child's name" class="form-control">
+                        </div>
+                        <div class="question-group">
+                            <label>🎂 Child's age</label>
+                            <input type="number" name="child_age" placeholder="Enter their age" min="1" max="18" class="form-control">
+                        </div>
+                        <div class="question-group">
+                            <label>🎈 Child's interests / theme</label>
+                            <textarea name="child_interests" placeholder="Billy loves dinosaurs, superman, and bowling he just lost his first tooth and is super excited!" rows="5" class="form-control"></textarea>
+                        </div>
+                        <div class="question-group">
+                            <label>🎵 Song Style</label>
+                            <select name="song_style" onchange="toggleOtherStyle(this)" class="form-control">
+                                <option value="">Select song style</option>
+                                <option value="kpop">K-POP</option>
+                                <option value="country">Country</option>
+                                <option value="rock">Rock n Roll</option>
+                                <option value="rap">Rap</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="question-group" id="other-style-group" style="display: none;">
+                            <label>🎶 Specify other style</label>
+                            <input type="text" name="other_style" placeholder="Enter the song style you prefer" class="form-control">
+                        </div>
+                    </div>
+                    
+                    <!-- Adult Birthday Questions -->
+                    <div id="adult_birthday-questions" class="occasion-questions" style="display: none;">
+                        <div class="question-group">
+                            <label>🎉 Person's name</label>
+                            <input type="text" name="adult_name" placeholder="Enter the birthday person's name" class="form-control">
+                        </div>
+                        <div class="question-group">
+                            <label>🎂 Person's age</label>
+                            <input type="number" name="adult_age" placeholder="Enter their age" min="18" max="100" class="form-control">
+                        </div>
+                        <div class="question-group">
+                            <label>🎈 Interests/theme/funny story etc.</label>
+                            <textarea name="adult_interests" placeholder="Johnny is our buddy, he's a total goof but he drinks too much so we like to roast him. Mention lemon drops and this girl he has a crush on named Susan. Also mention the Dallas Cowboys, Johnny loves them. Make it fun, but also pick on Johnny for being a terrible golfer no matter how hard he tries." rows="5" class="form-control"></textarea>
+                        </div>
+                        <div class="question-group">
+                            <label>🎵 Song Style</label>
+                            <select name="song_style_adult" onchange="toggleOtherStyleAdult(this)" class="form-control">
+                                <option value="">Select song style</option>
+                                <option value="kpop">K-POP</option>
+                                <option value="country">Country</option>
+                                <option value="rock">Rock n Roll</option>
+                                <option value="rap">Rap</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="question-group" id="other-style-group-adult" style="display: none;">
+                            <label>🎶 Specify other style</label>
+                            <input type="text" name="other_style_adult" placeholder="Enter the song style you prefer" class="form-control">
+                        </div>
+                    </div>
+                    
+                    <!-- Anniversary Questions -->
+                    <div id="anniversary-questions" class="occasion-questions" style="display: none;">
+                        <div class="question-group">
+                            <label>💕 What are their names?</label>
+                            <input type="text" name="couple_names" placeholder="e.g., John & Sarah" class="form-control">
+                        </div>
+                        <div class="question-group">
+                            <label>💍 How many years together?</label>
+                            <input type="number" name="anniversary_years" placeholder="Enter number of years" min="1" max="100" class="form-control">
+                        </div>
+                        <div class="question-group">
+                            <label>🎈 More details</label>
+                            <textarea name="anniversary_details" placeholder="Jack and Sara met 5 years ago at a bar named Jimmy's Saloon. They fell in love instantly. He loves Bush Light and she loves Margaritas. They love to jet ski and fly fish together. They bicker about chores but get over fights quick. They are the quirky friends but we all love them. Make it silly and fun with upbeat tempo." rows="5" class="form-control"></textarea>
+                        </div>
+                        <div class="question-group">
+                            <label>🎵 Song Style</label>
+                            <select name="song_style_anniversary" onchange="toggleOtherStyleAnniversary(this)" class="form-control">
+                                <option value="">Select song style</option>
+                                <option value="kpop">K-POP</option>
+                                <option value="country">Country</option>
+                                <option value="rock">Rock n Roll</option>
+                                <option value="rap">Rap</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="question-group" id="other-style-group-anniversary" style="display: none;">
+                            <label>🎶 Specify other style</label>
+                            <input type="text" name="other_style_anniversary" placeholder="Enter the song style you prefer" class="form-control">
+                        </div>
+                    </div>
+                    
+                    <!-- Roast Questions -->
+                    <div id="roast-questions" class="occasion-questions" style="display: none;">
+                        <div class="question-group">
+                            <label>🔥 Who's getting roasted?</label>
+                            <input type="text" name="roast_target" placeholder="Enter the person's name">
+                        </div>
+                        <div class="question-group">
+                            <label>😈 How mean should we be? (1-10)</label>
+                            <select name="roast_level">
+                                <option value="">Select roast level</option>
+                                <option value="1">1 - Playful teasing 😊</option>
+                                <option value="3">3 - Light roasting 😄</option>
+                                <option value="5">5 - Medium roasting 😏</option>
+                                <option value="7">7 - Heavy roasting 🔥</option>
+                                <option value="10">10 - BRUTAL roasting 💀</option>
+                            </select>
+                        </div>
+                        <div class="question-group">
+                            <label>🎯 What should we roast them about?</label>
+                            <textarea name="roast_topics" placeholder="e.g., their cooking, their driving, their fashion sense..." rows="3"></textarea>
+                        </div>
+                        <div class="question-group">
+                            <label>🎵 Song Style</label>
+                            <select name="song_style_roast" class="form-control" onchange="toggleOtherStyleRoast(this)">
+                                <option value="K-POP">K-POP</option>
+                                <option value="Country">Country</option>
+                                <option value="Rock n Roll">Rock n Roll</option>
+                                <option value="Rap">Rap</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="question-group" id="other_style_roast" style="display: none;">
+                            <label>Other Style</label>
+                            <input type="text" name="other_style_roast" placeholder="Specify your style" class="form-control">
+                        </div>
+                    </div>
+                    
+                    <!-- Other Questions -->
+                    <div id="other-questions" class="occasion-questions" style="display: none;">
+                        <div class="question-group">
+                            <label>🎭 What's the occasion?</label>
+                            <input type="text" name="other_occasion" placeholder="Describe the special occasion" class="form-control">
+                        </div>
+                        <div class="question-group">
+                            <label>👥 Who is this for?</label>
+                            <input type="text" name="other_recipient" placeholder="Enter recipient's name(s)" class="form-control">
+                        </div>
+                        <div class="question-group">
+                            <label>🎪 What's the vibe you're going for?</label>
+                            <select name="other_vibe" class="form-control">
+                                <option value="">Select the vibe</option>
+                                <option value="funny">Funny & Silly 😄</option>
+                                <option value="sentimental">Sentimental & Sweet 💕</option>
+                                <option value="epic">Epic & Dramatic 🎭</option>
+                                <option value="random">Random & Weird 🤪</option>
+                            </select>
+                        </div>
+                        <div class="question-group">
+                            <label>🎈 More details</label>
+                            <textarea name="other_details" placeholder="Wife bothered me about mowing the lawn, so I want a song about her not doing dishes. Make it sound like a realistic country song. Mention she never puts the bowls in the right spot, and mixes the little spoons with the big ones. But playfully and silly make her laugh." rows="5" class="form-control"></textarea>
+                        </div>
+                        <div class="question-group">
+                            <label>🎵 Song Style</label>
+                            <select name="song_style_other" class="form-control" onchange="toggleOtherStyleOther(this)">
+                                <option value="K-POP">K-POP</option>
+                                <option value="Country">Country</option>
+                                <option value="Rock n Roll">Rock n Roll</option>
+                                <option value="Rap">Rap</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="question-group" id="other_style_other" style="display: none;">
+                            <label>Other Style</label>
+                            <input type="text" name="other_style_other" placeholder="Specify your style" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                
+                <button type="submit" class="submit-btn">🎤 Make My Song!</button>
+            </form>
+        </div>
+        
+        <div class="demo-songs">
+            <h3>🎵 Sample Songs</h3>
+            <p style="text-align: center; color: #5a6c7d; margin-bottom: 30px;">Check out some of our recent creations to see what you can expect!</p>
+            
+            <div class="songs-grid">
+                <div class="song-item">
+                    <div class="song-title">🎂 Noah's 5th Birthday</div>
+                    <div class="song-description">A fun birthday song for a 5-year-old who loves dinosaurs and superheroes!</div>
+                    <audio controls class="audio-player">
+                        <source src="/assets/Noah 5th Birthday.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+                
+                <div class="song-item">
+                    <div class="song-title">💼 Ali's Job Promotion</div>
+                    <div class="song-description">Celebrating a well-deserved promotion with a catchy tune!</div>
+                    <audio controls class="audio-player">
+                        <source src="/assets/Ali Job Promotion.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+                
+                <div class="song-item">
+                    <div class="song-title">🏠 Caitlyn's Moving Song</div>
+                    <div class="song-description">A heartfelt song for someone starting a new chapter in life!</div>
+                    <audio controls class="audio-player">
+                        <source src="/assets/Caitlyn Moving Song.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+                
+                <div class="song-item">
+                    <div class="song-title">💕 Happy Anniversary - Tunko</div>
+                    <div class="song-description">A romantic anniversary song celebrating years of love and laughter!</div>
+                    <audio controls class="audio-player">
+                        <source src="/assets/Happy Anniversary - Tunko.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+                
+                <div class="song-item">
+                    <div class="song-title">😄 Silly Ian Song</div>
+                    <div class="song-description">A playful and silly song that's sure to make everyone smile!</div>
+                    <audio controls class="audio-player">
+                        <source src="/assets/Silly Ian Song.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+            </div>
+        </div>
+        
+        <div class="faq">
+            <h3>🤔 FAQ</h3>
+            <div class="faq-item">
+                <div class="faq-question">Will my song be weird?</div>
+                <div class="faq-answer">Yes. Extremely silly and catchy and weird and fun!</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">How long are the songs?</div>
+                <div class="faq-answer">Roughly 2-3 minutes — just enough to make everyone laugh without starting a full concert.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Can I play it at grandma's birthday?</div>
+                <div class="faq-answer">Yes. Just maybe skip the roast version. Unless grandma's into that.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">How do I get my song?</div>
+                <div class="faq-answer">We email you the finished track once it's ready. Easy peasy. (within an hour).</div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Simple function to toggle "Other" style input for Child's Birthday
+        function toggleOtherStyle(selectElement) {
+            const otherStyleGroup = document.getElementById('other-style-group');
+            if (selectElement.value === 'other') {
+                otherStyleGroup.style.display = 'block';
+            } else {
+                otherStyleGroup.style.display = 'none';
+            }
+        }
+        
+        // Simple function to toggle "Other" style input for Adult Birthday
+        function toggleOtherStyleAdult(selectElement) {
+            const otherStyleGroup = document.getElementById('other-style-group-adult');
+            if (selectElement.value === 'other') {
+                otherStyleGroup.style.display = 'block';
+            } else {
+                otherStyleGroup.style.display = 'none';
+            }
+        }
+        
+        // Simple function to toggle "Other" style input for Anniversary
+        function toggleOtherStyleAnniversary(selectElement) {
+            const otherStyleGroup = document.getElementById('other-style-group-anniversary');
+            if (selectElement.value === 'other') {
+                otherStyleGroup.style.display = 'block';
+            } else {
+                otherStyleGroup.style.display = 'none';
+            }
+        }
+        
+        function toggleOtherStyleRoast(selectElement) {
+            const otherInput = document.getElementById('other_style_roast');
+            if (selectElement.value === 'Other') {
+                otherInput.style.display = 'block';
+            } else {
+                otherInput.style.display = 'none';
+            }
+        }
+        
+        function toggleOtherStyleOther(selectElement) {
+            const otherInput = document.getElementById('other_style_other');
+            if (selectElement.value === 'Other') {
+                otherInput.style.display = 'block';
+            } else {
+                otherInput.style.display = 'none';
+            }
+        }
+        
+        // Handle occasion changes
+        document.addEventListener('DOMContentLoaded', function() {
+            const occasionSelect = document.querySelector('select[name="occasion"]');
+            const allOccasionQuestions = document.querySelectorAll('.occasion-questions');
+            
+            console.log('Found occasion select:', occasionSelect);
+            console.log('Found occasion questions:', allOccasionQuestions);
+            console.log('Child birthday element:', document.getElementById('child-birthday-questions'));
+            console.log('Adult birthday element:', document.getElementById('adult-birthday-questions'));
+            
+            function showQuestionsForOccasion(occasion) {
+                console.log('Trying to show questions for:', occasion);
+                // Hide all question sets first
+                allOccasionQuestions.forEach(questions => {
+                    questions.style.display = 'none';
+                });
+                
+                // Show the appropriate question set using querySelector
+                const questionId = occasion + '-questions';
+                console.log('Looking for question ID:', questionId);
+                
+                const targetQuestions = document.querySelector('#' + questionId);
+                
+                console.log('Found target questions:', targetQuestions);
+                if (targetQuestions) {
+                    targetQuestions.style.display = 'block';
+                    console.log('Showing questions for:', occasion);
+                } else {
+                    console.log('No questions found for:', occasion);
+                }
+            }
+            
+            if (occasionSelect) {
+                // Handle occasion change
+                occasionSelect.addEventListener('change', function() {
+                    const selectedOccasion = this.value;
+                    console.log('Occasion changed to:', selectedOccasion);
+                    showQuestionsForOccasion(selectedOccasion);
+                });
+                
+                // Show questions for default selection (Child's Birthday) immediately
+                showQuestionsForOccasion('child_birthday');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Silly Song Shop</title>
+    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .checkout-container {
+            max-width: 500px;
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .title {
+            font-size: 2rem;
+            color: #FF0096;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .order-summary {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+        
+        .order-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .order-details {
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #FF0096;
+            margin: 20px 0;
+        }
+        
+        .payment-form {
+            margin-top: 30px;
+        }
+        
+        #card-element {
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        #card-element:focus {
+            border-color: #FF0096;
+            outline: none;
+        }
+        
+        .payment-btn {
+            background: linear-gradient(135deg, #FF0096 0%, #FF7800 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.2s ease;
+        }
+        
+        .payment-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .payment-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .error-message {
+            color: #dc3545;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .back-link {
+            margin-top: 20px;
+        }
+        
+        .back-link a {
+            color: #FF0096;
+            text-decoration: none;
+        }
+        
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+        
+        .loading {
+            display: none;
+        }
+        
+        .loading.show {
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="checkout-container">
+        <h1 class="title">🎵 Complete Your Order</h1>
+        
+        <div class="order-summary">
+            <div class="order-title">{{ order.title }}</div>
+            <div class="order-details"><strong>Occasion:</strong> {{ order.get_occasion_display }}</div>
+            <div class="order-details"><strong>Email:</strong> {{ order.email }}</div>
+        </div>
+        
+        <div class="price">$9.99</div>
+        
+        <form id="payment-form" class="payment-form">
+            <div id="card-element">
+                <!-- Stripe Elements will create form elements here -->
+            </div>
+            
+            <div id="card-errors" class="error-message"></div>
+            
+            <button id="submit-payment" class="payment-btn">
+                <span id="button-text">💳 Pay $9.99</span>
+                <span id="loading" class="loading">Processing...</span>
+            </button>
+        </form>
+        
+        <div class="back-link">
+            <a href="{% url 'order_song' %}">← Back to Order Form</a>
+        </div>
+    </div>
+
+    <script>
+        const stripe = Stripe('{{ stripe_publishable_key }}');
+        const elements = stripe.elements();
+        
+        const cardElement = elements.create('card', {
+            style: {
+                base: {
+                    fontSize: '16px',
+                    color: '#424770',
+                    '::placeholder': {
+                        color: '#aab7c4',
+                    },
+                },
+            },
+        });
+        
+        cardElement.mount('#card-element');
+        
+        const form = document.getElementById('payment-form');
+        const submitButton = document.getElementById('submit-payment');
+        const buttonText = document.getElementById('button-text');
+        const loading = document.getElementById('loading');
+        
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            
+            // Disable button and show loading
+            submitButton.disabled = true;
+            buttonText.style.display = 'none';
+            loading.classList.add('show');
+            
+            const {error, paymentIntent} = await stripe.confirmCardPayment(
+                '{{ client_secret }}',
+                {
+                    payment_method: {
+                        card: cardElement,
+                    }
+                }
+            );
+            
+            if (error) {
+                // Show error to customer
+                const errorElement = document.getElementById('card-errors');
+                errorElement.textContent = error.message;
+                
+                // Re-enable button
+                submitButton.disabled = false;
+                buttonText.style.display = 'inline';
+                loading.classList.remove('show');
+            } else {
+                // Payment succeeded
+                window.location.href = "{% url 'payment_success' %}?order_id={{ order.id }}";
+            }
+        });
+    </script>
+</body>
+</html>

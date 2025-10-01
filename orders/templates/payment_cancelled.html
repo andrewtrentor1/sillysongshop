@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Cancelled - Silly Song Shop</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 600px;
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 60px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            border: 1px solid #e1e5e9;
+        }
+        
+        .icon {
+            font-size: 4rem;
+            margin-bottom: 30px;
+        }
+        
+        .title {
+            font-size: 2.5rem;
+            color: #FF0096;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+        
+        .message {
+            font-size: 1.2rem;
+            color: #4A5568;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        
+        .info-box {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .info-box h3 {
+            color: #856404;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+        
+        .info-box p {
+            color: #856404;
+        }
+        
+        .cta-button {
+            background: linear-gradient(135deg, #FF0096 0%, #FF7800 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.2s ease;
+            margin-right: 15px;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+        }
+        
+        .secondary-button {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.2s ease;
+        }
+        
+        .secondary-button:hover {
+            transform: translateY(-2px);
+            background: #5a6268;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon">😔💳</div>
+        <h1 class="title">Payment Cancelled</h1>
+        <p class="message">No worries! Your payment was cancelled and no charges were made to your account.</p>
+        
+        <div class="info-box">
+            <h3>🔄 Want to Try Again?</h3>
+            <p>If you'd like to complete your order, you can easily start over and try the payment process again. Your song details are still saved and ready to go!</p>
+        </div>
+        
+        <a href="{% url 'order_song' %}" class="cta-button">🎤 Try Again</a>
+        <a href="{% url 'order_song' %}" class="secondary-button">🏠 Back to Home</a>
+    </div>
+</body>
+</html>
