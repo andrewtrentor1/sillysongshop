@@ -3,18 +3,13 @@ import os
 
 # Override settings for production
 DEBUG = False
-ALLOWED_HOSTS = ['sillysongshop.com', 'www.sillysongshop.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['sillysongshop.com', 'www.sillysongshop.com', 'localhost', '127.0.0.1', 'web-production-125879.up.railway.app']
 
-# Database - use environment variables
+# Database - use Railway's DATABASE_URL
+import dj_database_url
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('DB_NAME', 'sillysongshop'),
-        'USER': os.environ.get('DB_USER', 'postgres'),
-        'PASSWORD': os.environ.get('DB_PASSWORD', ''),
-        'HOST': os.environ.get('DB_HOST', 'localhost'),
-        'PORT': os.environ.get('DB_PORT', '5432'),
-    }
+    'default': dj_database_url.parse(os.environ.get('DATABASE_URL', 'sqlite:///db.sqlite3'))
 }
 
 # Static files
@@ -28,8 +23,8 @@ STATICFILES_DIRS = [
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# Email settings - use environment variables
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# Email settings - use environment variables (optional)
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # Console backend for now
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
