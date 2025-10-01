@@ -103,21 +103,12 @@ def payment_success(request):
     if order_id:
         try:
             order = Order.objects.get(id=order_id)
-            if order.payment_status == 'pending':
-                order.payment_status = 'paid'
-                order.save()
-                print(f"DEBUG: Order {order.id} marked as paid from success page")
-                
-                # Send confirmation email
-                from .utils import send_payment_confirmation_email, send_discord_notification
-                send_payment_confirmation_email(order)
-                send_discord_notification(order)
-            else:
-                print(f"DEBUG: Order {order.id} already paid")
+            # Just verify the order exists - webhook handles payment status and notifications
+            print(f"DEBUG: Payment success page loaded for order {order.id}, status: {order.payment_status}")
         except Order.DoesNotExist:
             print(f"DEBUG: Order {order_id} not found")
         except Exception as e:
-            print(f"DEBUG: Error updating order status: {e}")
+            print(f"DEBUG: Error loading order: {e}")
     
     return render(request, 'payment_success.html')
 
