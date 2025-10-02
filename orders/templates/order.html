@@ -826,25 +826,25 @@ line-height: 1.6;
         document.addEventListener('DOMContentLoaded', function() {
             const occasionSelect = document.querySelector('select[name="occasion"]');
             const allOccasionQuestions = document.querySelectorAll('.occasion-questions');
-            
+
             console.log('Found occasion select:', occasionSelect);
             console.log('Found occasion questions:', allOccasionQuestions);
             console.log('Child birthday element:', document.getElementById('child-birthday-questions'));
             console.log('Adult birthday element:', document.getElementById('adult-birthday-questions'));
-            
+
             function showQuestionsForOccasion(occasion) {
                 console.log('Trying to show questions for:', occasion);
                 // Hide all question sets first
                 allOccasionQuestions.forEach(questions => {
                     questions.style.display = 'none';
                 });
-                
+
                 // Show the appropriate question set using querySelector
                 const questionId = occasion + '-questions';
                 console.log('Looking for question ID:', questionId);
-                
+
                 const targetQuestions = document.querySelector('#' + questionId);
-                
+
                 console.log('Found target questions:', targetQuestions);
                 if (targetQuestions) {
                     targetQuestions.style.display = 'block';
@@ -853,7 +853,7 @@ line-height: 1.6;
                     console.log('No questions found for:', occasion);
                 }
             }
-            
+
             if (occasionSelect) {
                 // Handle occasion change
                 occasionSelect.addEventListener('change', function() {
@@ -861,10 +861,30 @@ line-height: 1.6;
                     console.log('Occasion changed to:', selectedOccasion);
                     showQuestionsForOccasion(selectedOccasion);
                 });
-                
+
                 // Show questions for default selection (Child's Birthday) immediately
                 showQuestionsForOccasion('child_birthday');
             }
+
+            // Track demo song plays with Google Analytics
+            const audioPlayers = document.querySelectorAll('.audio-player');
+            audioPlayers.forEach(function(audio) {
+                audio.addEventListener('play', function() {
+                    // Get the song title from the parent song-item
+                    const songItem = audio.closest('.song-item');
+                    const songTitle = songItem ? songItem.querySelector('.song-title').textContent.trim() : 'Unknown Song';
+
+                    // Send event to Google Analytics
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'demo_song_play', {
+                            song_title: songTitle,
+                            event_category: 'engagement',
+                            event_label: songTitle
+                        });
+                        console.log('GA event sent: demo_song_play -', songTitle);
+                    }
+                });
+            });
         });
     </script>
 {% endblock %}
