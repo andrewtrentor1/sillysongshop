@@ -110,6 +110,15 @@ justify-content: center;
 {% endblock %}
 
 {% block content %}
+<!-- Meta Pixel - InitiateCheckout Event -->
+<script>
+fbq('track', 'InitiateCheckout', {
+    value: 9.99,
+    currency: 'USD',
+    content_name: 'Custom Silly Song',
+    content_category: 'Music'
+});
+</script>
 <div class="checkout-container">
         <h1 class="title">🎵 Complete Your Order</h1>
         

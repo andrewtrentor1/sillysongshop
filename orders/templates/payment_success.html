@@ -93,6 +93,15 @@ padding: 20px;
 {% endblock %}
 
 {% block content %}
+<!-- Meta Pixel - Purchase Event -->
+<script>
+fbq('track', 'Purchase', {
+    value: 9.99,
+    currency: 'USD',
+    content_name: 'Custom Silly Song',
+    content_category: 'Music'
+});
+</script>
 <div class="container">
         <div class="celebration">🎉🎶💳</div>
         <h1 class="title">Payment Successful! 🎵</h1>
