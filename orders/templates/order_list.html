@@ -267,7 +267,10 @@ padding: 20px;
     <div class="container">
         <div class="header">
             <h1 class="title">🎵 Order Management</h1>
-            <a href="{% url 'admin_logout' %}" class="logout-btn">Logout</a>
+            <div style="display: flex; gap: 10px;">
+                <a href="{% url 'analytics_dashboard' %}" class="btn" style="background: #28a745;">📊 Analytics</a>
+                <a href="{% url 'admin_logout' %}" class="logout-btn">Logout</a>
+            </div>
         </div>
         
         {% if messages %}

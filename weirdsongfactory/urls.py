@@ -21,6 +21,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from orders.views import order_song, admin_login, order_list, mark_complete, delete_order, admin_logout
 from orders.payment_views import create_payment_intent, payment_success, payment_cancelled, stripe_webhook
+from orders.analytics_views import analytics_dashboard
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -30,6 +31,7 @@ urlpatterns = [
     path("orders/complete/<int:order_id>/", mark_complete, name="mark_complete"),
     path("orders/delete/<int:order_id>/", delete_order, name="delete_order"),
     path("admin-logout/", admin_logout, name="admin_logout"),
+    path("analytics/", analytics_dashboard, name="analytics_dashboard"),
     # Payment URLs
     path("checkout/<int:order_id>/", create_payment_intent, name="create_payment_intent"),
     path("payment/success/", payment_success, name="payment_success"),

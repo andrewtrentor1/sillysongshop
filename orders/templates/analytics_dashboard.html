@@ -1,0 +1,292 @@
+{% extends "base.html" %}
+
+{% block title %}Analytics Dashboard - Silly Song Shop{% endblock %}
+
+{% block extra_styles %}
+    <style>
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .metric-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .metric-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #FF0096;
+            margin-bottom: 5px;
+        }
+        
+        .metric-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .chart-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .data-table {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .data-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .data-table th,
+        .data-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .data-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #FF0096;
+        }
+        
+        .analytics-toggle {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: #FF0096;
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <h1>📊 Analytics Dashboard</h1>
+    <p class="subtitle">Track your website performance and conversions</p>
+    
+    <!-- Analytics Settings Toggle -->
+    <div class="analytics-toggle">
+        <h3>Analytics Settings</h3>
+        <p>Enable or disable analytics tracking</p>
+        
+        {% if analytics_settings %}
+        <form method="post" action="{% url 'admin:orders_analyticssettings_change' 1 %}">
+            {% csrf_token %}
+            <label class="toggle-switch">
+                <input type="checkbox" {% if analytics_settings.analytics_enabled %}checked{% endif %} 
+                       onchange="this.form.submit()">
+                <span class="slider"></span>
+            </label>
+            <span style="margin-left: 10px;">
+                {% if analytics_settings.analytics_enabled %}Analytics Enabled{% else %}Analytics Disabled{% endif %}
+            </span>
+        </form>
+        
+        <div style="margin-top: 15px;">
+            <p><strong>Google Analytics ID:</strong> {{ analytics_settings.google_analytics_id|default:"Not set" }}</p>
+            <p><strong>Google Tag Manager ID:</strong> {{ analytics_settings.google_tag_manager_id|default:"Not set" }}</p>
+            <p><strong>Facebook Pixel ID:</strong> {{ analytics_settings.facebook_pixel_id|default:"Not set" }}</p>
+        </div>
+        {% else %}
+        <p style="color: #666;">No analytics settings found. <a href="{% url 'admin:orders_analyticssettings_add' %}">Create settings</a></p>
+        {% endif %}
+    </div>
+    
+    <!-- Key Metrics -->
+    <div class="metrics-grid">
+        <div class="metric-card">
+            <div class="metric-value">{{ total_sessions }}</div>
+            <div class="metric-label">Total Sessions</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">{{ total_page_views }}</div>
+            <div class="metric-label">Page Views</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">{{ total_conversions }}</div>
+            <div class="metric-label">Conversions</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">{{ conversion_rate }}%</div>
+            <div class="metric-label">Conversion Rate</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">${{ total_revenue|floatformat:2 }}</div>
+            <div class="metric-label">Total Revenue</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">{{ total_orders }}</div>
+            <div class="metric-label">Total Orders</div>
+        </div>
+    </div>
+    
+    <!-- Traffic Sources -->
+    <div class="data-table">
+        <h3 style="padding: 20px; margin: 0; background: #f8f9fa;">Top Traffic Sources</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Source</th>
+                    <th>Sessions</th>
+                    <th>Conversions</th>
+                    <th>Conversion Rate</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for source in traffic_sources %}
+                <tr>
+                    <td>{{ source.utm_source|default:"Direct" }}</td>
+                    <td>{{ source.sessions }}</td>
+                    <td>{{ source.conversions }}</td>
+                    <td>
+                        {% if source.sessions > 0 %}
+                            {% widthratio source.conversions source.sessions 100 %}%
+                        {% else %}
+                            0%
+                        {% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4">No traffic data available</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <!-- Recent Conversions -->
+    <div class="data-table" style="margin-top: 20px;">
+        <h3 style="padding: 20px; margin: 0; background: #f8f9fa;">Recent Conversions</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Event Type</th>
+                    <th>Value</th>
+                    <th>Session ID</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for conversion in recent_conversions %}
+                <tr>
+                    <td>{{ conversion.timestamp|date:"M d, Y H:i" }}</td>
+                    <td>{{ conversion.get_event_type_display }}</td>
+                    <td>
+                        {% if conversion.event_value %}
+                            ${{ conversion.event_value|floatformat:2 }}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                    <td>{{ conversion.session.session_id|slice:":8" }}...</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4">No conversions yet</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <!-- Page Performance -->
+    <div class="data-table" style="margin-top: 20px;">
+        <h3 style="padding: 20px; margin: 0; background: #f8f9fa;">Page Performance</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Page</th>
+                    <th>Views</th>
+                    <th>Avg. Time (seconds)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for page in page_performance %}
+                <tr>
+                    <td>{{ page.page_title }}</td>
+                    <td>{{ page.views }}</td>
+                    <td>{{ page.avg_time|floatformat:1 }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3">No page data available</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <div style="margin-top: 30px; text-align: center; color: #666;">
+        <p>Data for {{ date_range }}</p>
+        <p><a href="{% url 'admin:orders_visitorsession_changelist' %}">View all sessions in admin</a> | 
+           <a href="{% url 'admin:orders_conversionevent_changelist' %}">View all conversions</a></p>
+    </div>
+</div>
+{% endblock %}

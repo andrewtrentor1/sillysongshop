@@ -6,6 +6,7 @@ from django.http import HttpResponse
 from .forms import OrderForm
 from .models import Order
 from .utils import send_song_ready_email
+from .analytics_middleware import track_conversion
 
 def order_song(request):
     if request.method == "POST":
@@ -124,6 +125,17 @@ def order_song(request):
             )
             print(f"DEBUG: Order created successfully with ID: {order.id}")
             
+            # Track conversion event
+            track_conversion(
+                request, 
+                'form_submit', 
+                event_data={
+                    'order_id': order.id,
+                    'occasion': occasion,
+                    'title': title
+                }
+            )
+            
             # Redirect to payment page
             return redirect('create_payment_intent', order_id=order.id)
         else:
@@ -138,7 +150,9 @@ def admin_login(request):
         password = request.POST.get('password')
         if password == 'PickleKings1425':
             request.session['admin_logged_in'] = True
-            return redirect('order_list')
+            # Get the next URL from the request, default to order_list
+            next_url = request.GET.get('next', 'order_list')
+            return redirect(next_url)
         else:
             messages.error(request, 'Invalid password')
     return render(request, 'admin_login.html')

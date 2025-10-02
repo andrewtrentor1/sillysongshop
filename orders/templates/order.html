@@ -15,7 +15,7 @@ line-height: 1.6;
             background: transparent;
             border-radius: 12px;
             padding: 40px 0;
-            margin-bottom: 50px;
+            margin-bottom: 0;
             border: none;
         }
         
@@ -192,6 +192,17 @@ line-height: 1.6;
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
         
+        .submit-btn {
+            display: block;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        
         @media (max-width: 768px) {
             body {
                 background: linear-gradient(135deg, #FF0096 0%, #FF7800 100%);
@@ -271,10 +282,13 @@ line-height: 1.6;
                 font-size: 16px; /* Prevents zoom on iOS */
             }
             
-            .submit-btn {
-                padding: 18px 24px;
-                font-size: 1.1rem;
-            }
+        .submit-btn {
+            padding: 18px 24px;
+            font-size: 1.1rem;
+            display: block;
+            margin: 0 auto;
+            text-align: center;
+        }
             
             .demo-songs {
                 padding: 25px 20px;
@@ -408,7 +422,20 @@ line-height: 1.6;
         </div>
         
         <div class="form-container">
-            <h2 style="text-align: center; color: #FF0096; margin-bottom: 30px; font-size: 2rem;">🎤 Order Your Weird Song</h2>
+            <h2 style="text-align: center; color: #FF0096; margin-bottom: 20px; font-size: 2rem;">🎤 Order Your Silly Song</h2>
+            
+            <!-- Pricing Display -->
+            <div style="text-align: center; margin-bottom: 30px; padding: 20px; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 12px; border: 2px solid #FF0096;">
+                <div style="display: flex; align-items: center; justify-content: center; gap: 15px; flex-wrap: wrap;">
+                    <div style="font-size: 1.1rem; color: #666;">Regular Price:</div>
+                    <div style="text-decoration: line-through; font-size: 1.3rem; color: #999; font-weight: 600;">$19.99</div>
+                    <div style="font-size: 1.1rem; color: #666;">Sale Price:</div>
+                    <div style="font-size: 2.2rem; color: #FF0096; font-weight: 900; text-shadow: 2px 2px 4px rgba(0,0,0,0.1);">$9.99</div>
+                    <div style="background: #ff4444; color: white; padding: 5px 12px; border-radius: 20px; font-size: 0.9rem; font-weight: 700;">SAVE 50%!</div>
+                </div>
+                <div style="font-size: 0.9rem; color: #666; margin-top: 8px;">🎉 Limited time offer - Get your custom song <strong>within the hour</strong>!</div>
+            </div>
+            
             <p style="text-align: center; margin-bottom: 30px; color: #666;">Fill this out, and we'll take it from here.</p>
             
             {% if messages %}
@@ -683,6 +710,65 @@ line-height: 1.6;
             <div class="faq-item">
                 <div class="faq-question">How do I get my song?</div>
                 <div class="faq-answer">We email you the finished track once it's ready. Easy peasy. (within an hour).</div>
+            </div>
+        </div>
+        
+        <!-- Trusted Footer -->
+        <div style="margin-top: 60px; padding: 40px 20px; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 12px; text-align: center;">
+            <div style="margin-bottom: 30px;">
+                <h3 style="color: #FF0096; margin-bottom: 20px; font-size: 1.3rem;">🔒 Trusted & Secure</h3>
+                <div style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 30px; margin-bottom: 20px;">
+                    <!-- Security Badges -->
+                    <div style="display: flex; align-items: center; gap: 8px; padding: 10px 15px; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                        <span style="font-size: 1.5rem;">🛡️</span>
+                        <span style="font-weight: 600; color: #333;">SSL Secured</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px; padding: 10px 15px; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                        <span style="font-size: 1.5rem;">💳</span>
+                        <span style="font-weight: 600; color: #333;">Stripe Payment</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px; padding: 10px 15px; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                        <span style="font-size: 1.5rem;">⚡</span>
+                        <span style="font-weight: 600; color: #333;">1-Hour Delivery</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px; padding: 10px 15px; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                        <span style="font-size: 1.5rem;">🎵</span>
+                        <span style="font-weight: 600; color: #333;">100% Custom</span>
+                    </div>
+                </div>
+                
+                <!-- Trust Logos -->
+                <div style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 25px; margin-bottom: 30px; opacity: 0.7;">
+                    <div style="font-size: 0.9rem; color: #666; font-weight: 600;">Trusted by</div>
+                    <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                        <div style="padding: 8px 12px; background: white; border-radius: 6px; font-weight: 600; color: #333; font-size: 0.9rem;">Google</div>
+                        <div style="padding: 8px 12px; background: white; border-radius: 6px; font-weight: 600; color: #333; font-size: 0.9rem;">Stripe</div>
+                        <div style="padding: 8px 12px; background: white; border-radius: 6px; font-weight: 600; color: #333; font-size: 0.9rem;">PayPal</div>
+                        <div style="padding: 8px 12px; background: white; border-radius: 6px; font-weight: 600; color: #333; font-size: 0.9rem;">Visa</div>
+                        <div style="padding: 8px 12px; background: white; border-radius: 6px; font-weight: 600; color: #333; font-size: 0.9rem;">Mastercard</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Contact & Support -->
+            <div style="border-top: 1px solid #ddd; padding-top: 20px;">
+                <div style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 30px; margin-bottom: 15px;">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 1.2rem;">📧</span>
+                        <a href="mailto:support@sillysongshop.com" style="color: #FF0096; text-decoration: none; font-weight: 600;">support@sillysongshop.com</a>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 1.2rem;">⏰</span>
+                        <span style="color: #666; font-weight: 600;">24/7 Support</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 1.2rem;">🔄</span>
+                        <span style="color: #666; font-weight: 600;">Money Back Guarantee</span>
+                    </div>
+                </div>
+                <div style="color: #999; font-size: 0.85rem; margin-top: 10px;">
+                    © 2024 Silly Song Shop. All rights reserved. | Made with ❤️ for making people smile
+                </div>
             </div>
         </div>
     </div>

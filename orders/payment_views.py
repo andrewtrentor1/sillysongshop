@@ -7,6 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 import json
 from .models import Order
+from .analytics_middleware import track_conversion
 
 # Set your secret key
 stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -105,6 +106,18 @@ def payment_success(request):
             order = Order.objects.get(id=order_id)
             # Just verify the order exists - webhook handles payment status and notifications
             print(f"DEBUG: Payment success page loaded for order {order.id}, status: {order.payment_status}")
+            
+            # Track payment completion conversion
+            track_conversion(
+                request,
+                'payment_complete',
+                event_value=9.99,  # $9.99
+                event_data={
+                    'order_id': order.id,
+                    'occasion': order.occasion,
+                    'title': order.title
+                }
+            )
         except Order.DoesNotExist:
             print(f"DEBUG: Order {order_id} not found")
         except Exception as e:
