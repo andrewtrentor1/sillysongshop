@@ -93,6 +93,7 @@ class Order(models.Model):
     status = models.CharField(max_length=20, default="pending")
     payment_status = models.CharField(max_length=20, default="pending")
     stripe_payment_intent_id = models.CharField(max_length=255, blank=True, null=True)
+    expedited_delivery = models.BooleanField(default=False, help_text="2-hour delivery for $10.99 extra")
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

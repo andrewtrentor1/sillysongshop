@@ -21,9 +21,14 @@ def create_payment_intent(request, order_id):
         return redirect('order_song')
     
     try:
+        # Calculate amount based on expedited delivery
+        base_amount = 999  # $9.99 in cents
+        expedited_amount = 1099  # $10.99 in cents
+        total_amount = base_amount + (expedited_amount if order.expedited_delivery else 0)
+        
         # Create payment intent
         intent = stripe.PaymentIntent.create(
-            amount=999,  # $9.99 in cents
+            amount=total_amount,
             currency='usd',
             automatic_payment_methods={
                 'enabled': True,
@@ -31,7 +36,8 @@ def create_payment_intent(request, order_id):
             metadata={
                 'order_id': order.id,
                 'order_title': order.title,
-                'customer_email': order.email
+                'customer_email': order.email,
+                'expedited_delivery': str(order.expedited_delivery)
             }
         )
         

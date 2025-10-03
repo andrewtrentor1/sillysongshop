@@ -113,9 +113,9 @@ justify-content: center;
 <!-- Meta Pixel - InitiateCheckout Event -->
 <script>
 fbq('track', 'InitiateCheckout', {
-    value: 9.99,
+    value: {% if order.expedited_delivery %}20.98{% else %}9.99{% endif %},
     currency: 'USD',
-    content_name: 'Custom Silly Song',
+    content_name: 'Custom Silly Song{% if order.expedited_delivery %} - Expedited{% endif %}',
     content_category: 'Music'
 });
 </script>
@@ -126,9 +126,22 @@ fbq('track', 'InitiateCheckout', {
             <div class="order-title">{{ order.title }}</div>
             <div class="order-details"><strong>Occasion:</strong> {{ order.get_occasion_display }}</div>
             <div class="order-details"><strong>Email:</strong> {{ order.email }}</div>
+            {% if order.expedited_delivery %}
+            <div class="order-details" style="color: #FF0096; font-weight: 600;"><strong>⚡ Expedited Delivery:</strong> 2 hours</div>
+            {% else %}
+            <div class="order-details"><strong>Delivery:</strong> 24 hours</div>
+            {% endif %}
         </div>
         
-        <div class="price">$9.99</div>
+        <div class="price">
+            {% if order.expedited_delivery %}
+                <div style="font-size: 1rem; color: #666; margin-bottom: 5px;">Base Price: $9.99</div>
+                <div style="font-size: 1rem; color: #666; margin-bottom: 5px;">Expedited Delivery: +$10.99</div>
+                <div style="font-size: 1.5rem; color: #FF0096; font-weight: 700;">Total: $20.98</div>
+            {% else %}
+                $9.99
+            {% endif %}
+        </div>
         
         <form id="payment-form" class="payment-form">
             <div id="card-element">
@@ -138,7 +151,7 @@ fbq('track', 'InitiateCheckout', {
             <div id="card-errors" class="error-message"></div>
             
             <button id="submit-payment" class="payment-btn">
-                <span id="button-text">💳 Pay $9.99</span>
+                <span id="button-text">💳 Pay {% if order.expedited_delivery %}$20.98{% else %}$9.99{% endif %}</span>
                 <span id="loading" class="loading">Processing...</span>
             </button>
         </form>

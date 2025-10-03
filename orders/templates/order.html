@@ -97,14 +97,14 @@ line-height: 1.6;
             margin-top: 0;
             background: transparent;
             border-radius: 12px;
-            padding: 40px 0;
+            padding: 40px 0 10px 0;
             border: none;
         }
         
         .reaction-videos h3 {
             color: #FF0096;
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 10px;
             font-size: 1.8rem;
             font-weight: 700;
         }
@@ -177,11 +177,23 @@ line-height: 1.6;
         }
         
         .video-controls {
-            display: flex;
-            justify-content: space-between;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
             align-items: center;
             margin-bottom: 15px;
             gap: 10px;
+        }
+        
+        .video-controls .video-btn:first-child {
+            justify-self: start;
+        }
+        
+        .video-controls .video-btn:last-child {
+            justify-self: end;
+        }
+        
+        .video-controls .sound-btn-small {
+            justify-self: center;
         }
         
         .video-btn {
@@ -551,7 +563,7 @@ line-height: 1.6;
         <div class="how-it-works">
             <h2 style="text-align: center; color: #FF0096; margin-bottom: 20px; font-size: 1.8rem; font-weight: 700; text-shadow: 2px 2px 4px rgba(0,0,0,0.1);">🌟 How It Works</h2>
             <div style="text-align: center; margin-bottom: 30px;">
-                <span style="background: linear-gradient(135deg, #FF0096 0%, #FF7800 100%); color: white; padding: 10px 16px; border-radius: 25px; font-weight: 600; font-size: 0.85rem; box-shadow: 0 4px 12px rgba(255, 0, 150, 0.3); display: inline-block; max-width: 90%; word-wrap: break-word;">⚡ Delivery within 1 hour guaranteed</span>
+                <span style="background: linear-gradient(135deg, #FF0096 0%, #FF7800 100%); color: white; padding: 10px 16px; border-radius: 25px; font-weight: 600; font-size: 0.85rem; box-shadow: 0 4px 12px rgba(255, 0, 150, 0.3); display: inline-block; max-width: 90%; word-wrap: break-word;">⚡ Make Someone's Day</span>
             </div>
             <div class="steps">
                 <div class="step">
@@ -584,7 +596,7 @@ line-height: 1.6;
                     <div style="font-size: 2.2rem; color: #FF0096; font-weight: 900; text-shadow: 2px 2px 4px rgba(0,0,0,0.1);">$9.99</div>
                     <div style="background: #ff4444; color: white; padding: 5px 12px; border-radius: 20px; font-size: 0.9rem; font-weight: 700;">SAVE 50%!</div>
                 </div>
-                <div style="font-size: 0.9rem; color: #666; margin-top: 8px;">🎉 Limited time offer - Get your custom song <strong>within the hour</strong>!</div>
+                <div style="font-size: 0.9rem; color: #666; margin-top: 8px;">🎉 Limited time offer - Get your custom song <strong>within 24 hours</strong>!</div>
             </div>
             
             <p style="text-align: center; margin-bottom: 30px; color: #666;">Fill this out, and we'll take it from here.</p>
@@ -788,6 +800,18 @@ line-height: 1.6;
                     </div>
                 </div>
                 
+                <!-- Expedited Delivery Option -->
+                <div class="expedited-delivery-option" style="margin: 20px 0; padding: 20px; background: #f8f9fa; border-radius: 8px; border: 2px solid #e1e5e9;">
+                    <label style="display: flex; align-items: center; gap: 15px; cursor: pointer; margin: 0;">
+                        <input type="checkbox" id="expedited_delivery" name="expedited_delivery" style="transform: scale(1.2);" onchange="updateExpeditedDeliveryStyle()">
+                        <div style="flex: 1;">
+                            <div style="font-weight: 600; color: #FF0096; font-size: 1.1rem;">⚡ Expedited Delivery</div>
+                            <div style="color: #666; font-size: 0.9rem; margin-top: 2px;">Get your song in 2 hours instead of 24 hours</div>
+                        </div>
+                        <div style="font-weight: 700; color: #FF0096; font-size: 1.2rem;">+$10.99</div>
+                    </label>
+                </div>
+                
                 <button type="submit" class="submit-btn" onclick="fbq('track', 'Lead', {content_name: 'Custom Silly Song Form', content_category: 'Music'});">🎤 Make My Song!</button>
             </form>
         </div>
@@ -795,7 +819,7 @@ line-height: 1.6;
         <!-- Reaction Videos Section -->
         <div class="reaction-videos">
             <h3>😍 Reaction Videos</h3>
-            <p style="text-align: center; color: #5a6c7d; margin-bottom: 30px;">Send us your reaction video and get a free song in return!</p>
+            <p style="text-align: center; color: #5a6c7d; margin-bottom: 10px;">Send us your reaction video and get a free song in return!</p>
             
             <div class="video-carousel">
                 <div class="video-container">
@@ -1175,5 +1199,19 @@ line-height: 1.6;
             // Initialize
             updateVideo(0);
         });
+        
+        // Expedited Delivery Style Update
+        function updateExpeditedDeliveryStyle() {
+            const checkbox = document.getElementById('expedited_delivery');
+            const option = document.querySelector('.expedited-delivery-option');
+            
+            if (checkbox.checked) {
+                option.style.borderColor = '#FF0096';
+                option.style.backgroundColor = '#fff5f8';
+            } else {
+                option.style.borderColor = '#e1e5e9';
+                option.style.backgroundColor = '#f8f9fa';
+            }
+        }
     </script>
 {% endblock %}

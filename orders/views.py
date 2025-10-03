@@ -113,15 +113,19 @@ def order_song(request):
                 if other_style:
                     lyrics += f" ({other_style})"
             
+            # Get expedited delivery option
+            expedited_delivery = request.POST.get('expedited_delivery') == 'on'
+            
             # Create the order
-            print(f"DEBUG: Creating order with title='{title}', email='{email}'")
+            print(f"DEBUG: Creating order with title='{title}', email='{email}', expedited={expedited_delivery}")
             order = Order.objects.create(
                 title=title,
                 lyrics=lyrics,
                 occasion=occasion,
                 email=email,
                 status='pending',
-                payment_status='pending'
+                payment_status='pending',
+                expedited_delivery=expedited_delivery
             )
             print(f"DEBUG: Order created successfully with ID: {order.id}")
             
