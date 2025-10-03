@@ -93,6 +93,157 @@ line-height: 1.6;
             line-height: 1.5;
         }
         
+        .reaction-videos {
+            margin-top: 0;
+            background: transparent;
+            border-radius: 12px;
+            padding: 40px 0;
+            border: none;
+        }
+        
+        .reaction-videos h3 {
+            color: #FF0096;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .video-carousel {
+            max-width: 400px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border: 1px solid #e1e5e9;
+        }
+        
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 177.78%; /* 9:16 aspect ratio for 1080x1920 videos */
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        
+        .sound-btn-small {
+            background: linear-gradient(135deg, #FF0096 0%, #FF7800 100%);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(255, 0, 150, 0.3);
+            width: 40px;
+            height: 40px;
+            flex-shrink: 0;
+        }
+        
+        .sound-btn-small:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(255, 0, 150, 0.4);
+        }
+        
+        .sound-btn-small.sound-enabled {
+            background: linear-gradient(135deg, #00ff00 0%, #00cc00 100%);
+            box-shadow: 0 2px 8px rgba(0, 255, 0, 0.3);
+        }
+        
+        .sound-btn-small.sound-enabled:hover {
+            box-shadow: 0 4px 12px rgba(0, 255, 0, 0.4);
+        }
+        
+        .sound-icon {
+            font-size: 1rem;
+        }
+        
+        .reaction-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        
+        .video-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            gap: 10px;
+        }
+        
+        .video-btn {
+            background: linear-gradient(135deg, #FF0096 0%, #FF7800 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            box-shadow: 0 2px 8px rgba(255, 0, 150, 0.3);
+        }
+        
+        .video-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(255, 0, 150, 0.4);
+        }
+        
+        .video-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .video-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #e1e5e9;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .indicator.active {
+            background: #FF0096;
+            transform: scale(1.2);
+        }
+        
+        .indicator:hover {
+            background: #FF7800;
+        }
+        
+        @media (max-width: 768px) {
+            .video-carousel {
+                max-width: 100%;
+                margin: 0 10px;
+            }
+            
+            .video-container {
+                padding-bottom: 177.78%; /* Maintain 9:16 aspect ratio */
+            }
+        }
+
         .demo-songs {
             margin-top: 50px;
             background: transparent;
@@ -641,6 +792,34 @@ line-height: 1.6;
             </form>
         </div>
         
+        <!-- Reaction Videos Section -->
+        <div class="reaction-videos">
+            <h3>😍 Reaction Videos</h3>
+            <p style="text-align: center; color: #5a6c7d; margin-bottom: 30px;">Send us your reaction video and get a free song in return!</p>
+            
+            <div class="video-carousel">
+                <div class="video-container">
+                    <video id="reaction-video" class="reaction-video" autoplay muted loop>
+                        <source src="/assets/childreact.mp4" type="video/mp4">
+                        <source src="/assets/womanreact.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="video-controls">
+                    <button id="prev-video" class="video-btn">← Previous</button>
+                    <button id="sound-toggle" class="sound-btn-small">
+                        <span class="sound-icon">🔇</span>
+                    </button>
+                    <button id="next-video" class="video-btn">Next →</button>
+                </div>
+                <div class="video-indicators">
+                    <span class="indicator active" data-video="0"></span>
+                    <span class="indicator" data-video="1"></span>
+                    <span class="indicator" data-video="2"></span>
+                </div>
+            </div>
+        </div>
+
         <div class="demo-songs">
             <h3>🎵 Sample Songs</h3>
             <p style="text-align: center; color: #5a6c7d; margin-bottom: 30px;">Check out some of our recent creations to see what you can expect!</p>
@@ -885,6 +1064,116 @@ line-height: 1.6;
                     }
                 });
             });
+
+            // Reaction Videos Carousel
+            const videos = [
+                '/assets/womanreact.mp4',
+                '/assets/childreact.mp4',
+                '/assets/menreact.mp4'
+            ];
+            
+            let currentVideoIndex = 0;
+            let soundEnabled = false;
+            const videoElement = document.getElementById('reaction-video');
+            const prevBtn = document.getElementById('prev-video');
+            const nextBtn = document.getElementById('next-video');
+            const indicators = document.querySelectorAll('.indicator');
+            const soundToggle = document.getElementById('sound-toggle');
+            const soundIcon = soundToggle.querySelector('.sound-icon');
+            
+            function updateVideo(index) {
+                currentVideoIndex = index;
+                videoElement.src = videos[index];
+                videoElement.muted = !soundEnabled;
+                videoElement.load();
+                videoElement.play();
+                
+                // Update indicators
+                indicators.forEach((indicator, i) => {
+                    indicator.classList.toggle('active', i === index);
+                });
+                
+                // Update button states
+                prevBtn.disabled = index === 0;
+                nextBtn.disabled = index === videos.length - 1;
+                
+                // Track video view in Google Analytics
+                if (typeof gtag !== 'undefined') {
+                    const videoName = videos[index].split('/').pop().replace('.mp4', '');
+                    gtag('event', 'reaction_video_view', {
+                        video_name: videoName,
+                        event_category: 'engagement',
+                        event_label: videoName
+                    });
+                    console.log('GA event sent: reaction_video_view -', videoName);
+                }
+            }
+            
+            function toggleSound() {
+                soundEnabled = !soundEnabled;
+                videoElement.muted = !soundEnabled;
+                
+                // Update button appearance
+                if (soundEnabled) {
+                    soundIcon.textContent = '🔊';
+                    soundToggle.classList.add('sound-enabled');
+                    
+                    // Track sound enable event
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'reaction_video_sound_enabled', {
+                            event_category: 'engagement',
+                            event_label: 'sound_enabled'
+                        });
+                        console.log('GA event sent: reaction_video_sound_enabled');
+                    }
+                } else {
+                    soundIcon.textContent = '🔇';
+                    soundToggle.classList.remove('sound-enabled');
+                }
+            }
+            
+            function nextVideo() {
+                if (currentVideoIndex < videos.length - 1) {
+                    updateVideo(currentVideoIndex + 1);
+                }
+            }
+            
+            function prevVideo() {
+                if (currentVideoIndex > 0) {
+                    updateVideo(currentVideoIndex - 1);
+                }
+            }
+            
+            // Event listeners
+            nextBtn.addEventListener('click', nextVideo);
+            prevBtn.addEventListener('click', prevVideo);
+            soundToggle.addEventListener('click', toggleSound);
+            
+            // Indicator clicks
+            indicators.forEach((indicator, index) => {
+                indicator.addEventListener('click', () => updateVideo(index));
+            });
+            
+            // Auto-rotate videos every 8 seconds
+            setInterval(() => {
+                nextVideo();
+            }, 8000);
+            
+            // Track video play events
+            videoElement.addEventListener('play', function() {
+                if (typeof gtag !== 'undefined') {
+                    const videoName = videos[currentVideoIndex].split('/').pop().replace('.mp4', '');
+                    gtag('event', 'reaction_video_play', {
+                        video_name: videoName,
+                        event_category: 'engagement',
+                        event_label: videoName
+                    });
+                    console.log('GA event sent: reaction_video_play -', videoName);
+                }
+            });
+            
+            // Initialize
+            updateVideo(0);
         });
     </script>
 {% endblock %}
