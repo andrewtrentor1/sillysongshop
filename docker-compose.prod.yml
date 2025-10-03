@@ -1,6 +1,8 @@
 services:
   nginx:
-    build: ./compose/prod/nginx
+    build:
+      context: .
+      dockerfile: ./compose/prod/nginx/Dockerfile
     volumes:
       - staticfiles:/app/staticfiles
       - mediafiles:/app/mediafiles
