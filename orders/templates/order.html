@@ -1071,7 +1071,7 @@ line-height: 1.6;
             
             <div class="video-carousel">
                 <div class="video-container">
-                    <video id="reaction-video" class="reaction-video" autoplay muted loop>
+                    <video id="reaction-video" class="reaction-video" autoplay muted>
                         <source src="/assets/childreact.mp4" type="video/mp4">
                         <source src="/assets/womanreact.mp4" type="video/mp4">
                         Your browser does not support the video tag.
@@ -1409,6 +1409,9 @@ line-height: 1.6;
             function nextVideo() {
                 if (currentVideoIndex < videos.length - 1) {
                     updateVideo(currentVideoIndex + 1);
+                } else {
+                    // Cycle back to first video
+                    updateVideo(0);
                 }
             }
             
@@ -1428,10 +1431,10 @@ line-height: 1.6;
                 indicator.addEventListener('click', () => updateVideo(index));
             });
             
-            // Auto-rotate videos every 8 seconds
-            setInterval(() => {
+            // Auto-rotate videos when current video ends
+            videoElement.addEventListener('ended', function() {
                 nextVideo();
-            }, 8000);
+            });
             
             // Track video play events
             videoElement.addEventListener('play', function() {
