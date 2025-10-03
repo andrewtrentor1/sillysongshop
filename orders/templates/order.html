@@ -46,6 +46,210 @@ line-height: 1.6;
             margin-bottom: 10px;
         }
         
+        .availability-section {
+            margin: 40px 0;
+        }
+        
+        .availability-card {
+            background: linear-gradient(135deg, #fff5f8 0%, #f0f8ff 100%);
+            border: 2px solid #FF0096;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(255, 0, 150, 0.1);
+        }
+        
+        .availability-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .availability-header h3 {
+            color: #FF0096;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .current-time {
+            color: #666;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .quota-info {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .quota-text {
+            font-size: 1.1rem;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .quota-reason {
+            font-size: 0.9rem;
+            color: #666;
+            font-style: italic;
+        }
+        
+        .availability-counter {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .remaining-songs {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        
+        .remaining-songs .number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #FF0096;
+            display: block;
+            line-height: 1;
+        }
+        
+        .remaining-songs .label {
+            font-size: 1rem;
+            color: #666;
+            font-weight: 500;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e1e5e9;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #FF0096 0%, #FF7800 100%);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+        
+        .sold-today {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .urgency-message {
+            text-align: center;
+            background: linear-gradient(135deg, #FF0096 0%, #FF7800 100%);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(255, 0, 150, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .urgency-message:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 0, 150, 0.4);
+        }
+        
+        .waitlist-notice {
+            text-align: center;
+            background: #f8f9fa;
+            border: 2px solid #FF0096;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 15px;
+        }
+        
+        .waitlist-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .waitlist-text {
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .waitlist-btn {
+            background: linear-gradient(135deg, #FF0096 0%, #FF7800 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        
+        .waitlist-btn:hover {
+            transform: translateY(-1px);
+        }
+        
+        .pricing-display {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border: 2px solid #FF0096;
+        }
+        
+        .pricing-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+        
+        .pricing-regular {
+            font-size: 1rem;
+            color: #666;
+        }
+        
+        .pricing-strikethrough {
+            text-decoration: line-through;
+            font-size: 1.2rem;
+            color: #999;
+            font-weight: 600;
+        }
+        
+        .pricing-sale {
+            font-size: 1rem;
+            color: #666;
+        }
+        
+        .pricing-price {
+            font-size: 2rem;
+            color: #FF0096;
+            font-weight: 900;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .pricing-save {
+            background: #ff4444;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+        
+        .pricing-offer {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
         .form-container {
             background: transparent;
             border-radius: 12px;
@@ -584,20 +788,64 @@ line-height: 1.6;
             </div>
         </div>
         
+        <!-- Daily Availability Section -->
+        <div class="availability-section">
+            <div class="availability-card">
+                <div class="availability-header">
+                    <h3>🎵 Daily Song Availability</h3>
+                    <div class="current-time" id="current-time"></div>
+                </div>
+                
+                <div class="availability-content">
+                    <div class="quota-info">
+                        <div class="quota-text">We can only produce <strong>30 custom songs per day</strong></div>
+                        <div class="quota-reason">Each song takes 45+ minutes of our team's time to perfect</div>
+                    </div>
+                    
+                    <div class="availability-counter">
+                        <div class="remaining-songs">
+                            <span class="number" id="remaining-count">12</span>
+                            <span class="label">songs remaining today</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-fill"></div>
+                        </div>
+                        <div class="sold-today">
+                            <span id="sold-count">18</span> songs already ordered today
+                        </div>
+                    </div>
+                    
+                    <div class="urgency-message" id="urgency-message" onclick="scrollToForm()" style="cursor: pointer;">
+                        ⚡ <strong>Hurry!</strong> Orders are coming in fast - don't miss out!
+                    </div>
+                    
+                    <div class="waitlist-notice" id="waitlist-notice" style="display: none;">
+                        <div class="waitlist-icon">📋</div>
+                        <div class="waitlist-text">
+                            <strong>Daily quota reached!</strong><br>
+                            Join our waitlist and we'll prioritize your song for tomorrow
+                        </div>
+                        <button class="waitlist-btn" onclick="joinWaitlist()">Join Waitlist</button>
+                    </div>
+                    
+                    <!-- Pricing Display Inside Availability Card -->
+                    <div class="pricing-display">
+                        <div class="pricing-content">
+                            <div class="pricing-regular">Regular Price: <span class="pricing-strikethrough">$19.99</span></div>
+                            <div class="pricing-sale">Sale Price: <span class="pricing-price">$9.99</span></div>
+                            <div class="pricing-save">SAVE 50%!</div>
+                        </div>
+                        <div class="pricing-offer">
+                            🎉 Limited time offer - Get your custom song <strong>within 24 hours</strong>!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <div class="form-container">
             <h2 style="text-align: center; color: #FF0096; margin-bottom: 20px; font-size: 2rem;">🎤 Order Your Silly Song</h2>
             
-            <!-- Pricing Display -->
-            <div style="text-align: center; margin-bottom: 30px; padding: 20px; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 12px; border: 2px solid #FF0096;">
-                <div style="display: flex; align-items: center; justify-content: center; gap: 15px; flex-wrap: wrap;">
-                    <div style="font-size: 1.1rem; color: #666;">Regular Price:</div>
-                    <div style="text-decoration: line-through; font-size: 1.3rem; color: #999; font-weight: 600;">$19.99</div>
-                    <div style="font-size: 1.1rem; color: #666;">Sale Price:</div>
-                    <div style="font-size: 2.2rem; color: #FF0096; font-weight: 900; text-shadow: 2px 2px 4px rgba(0,0,0,0.1);">$9.99</div>
-                    <div style="background: #ff4444; color: white; padding: 5px 12px; border-radius: 20px; font-size: 0.9rem; font-weight: 700;">SAVE 50%!</div>
-                </div>
-                <div style="font-size: 0.9rem; color: #666; margin-top: 8px;">🎉 Limited time offer - Get your custom song <strong>within 24 hours</strong>!</div>
-            </div>
             
             <p style="text-align: center; margin-bottom: 30px; color: #666;">Fill this out, and we'll take it from here.</p>
             
@@ -1200,6 +1448,11 @@ line-height: 1.6;
             updateVideo(0);
         });
         
+        // Initialize availability counter when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeAvailabilityCounter();
+        });
+        
         // Expedited Delivery Style Update
         function updateExpeditedDeliveryStyle() {
             const checkbox = document.getElementById('expedited_delivery');
@@ -1211,6 +1464,109 @@ line-height: 1.6;
             } else {
                 option.style.borderColor = '#e1e5e9';
                 option.style.backgroundColor = '#f8f9fa';
+            }
+        }
+        
+        // Daily Availability Counter
+        function initializeAvailabilityCounter() {
+            const totalSongs = 30;
+            let soldSongs = 18; // Starting number
+            let remainingSongs = totalSongs - soldSongs;
+            
+            // Get current time
+            function updateCurrentTime() {
+                const now = new Date();
+                const timeString = now.toLocaleTimeString('en-US', { 
+                    hour: '2-digit', 
+                    minute: '2-digit',
+                    hour12: true 
+                });
+                document.getElementById('current-time').textContent = `Current time: ${timeString}`;
+            }
+            
+            // Update counter display
+            function updateCounter() {
+                document.getElementById('remaining-count').textContent = remainingSongs;
+                document.getElementById('sold-count').textContent = soldSongs;
+                
+                const progressPercent = (soldSongs / totalSongs) * 100;
+                document.getElementById('progress-fill').style.width = progressPercent + '%';
+                
+                // Show waitlist if quota reached
+                if (remainingSongs <= 0) {
+                    document.getElementById('urgency-message').style.display = 'none';
+                    document.getElementById('waitlist-notice').style.display = 'block';
+                } else if (remainingSongs <= 5) {
+                    document.getElementById('urgency-message').innerHTML = '🔥 <strong>Almost sold out!</strong> Only ' + remainingSongs + ' songs left today!';
+                    document.getElementById('urgency-message').style.cursor = 'pointer';
+                } else if (remainingSongs <= 10) {
+                    document.getElementById('urgency-message').innerHTML = '⚡ <strong>Limited availability!</strong> Only ' + remainingSongs + ' songs remaining today!';
+                    document.getElementById('urgency-message').style.cursor = 'pointer';
+                }
+            }
+            
+            // Simulate sales every 30-45 minutes
+            function simulateSales() {
+                if (remainingSongs > 0) {
+                    // Random chance of selling 1-2 songs
+                    const shouldSell = Math.random() < 0.7; // 70% chance every 30 minutes
+                    if (shouldSell) {
+                        const songsToSell = Math.random() < 0.6 ? 1 : 2; // 60% chance of 1, 40% chance of 2
+                        const actualSell = Math.min(songsToSell, remainingSongs);
+                        soldSongs += actualSell;
+                        remainingSongs -= actualSell;
+                        updateCounter();
+                    }
+                }
+            }
+            
+            // Initialize
+            updateCurrentTime();
+            updateCounter();
+            
+            // Update time every minute
+            setInterval(updateCurrentTime, 60000);
+            
+            // Simulate sales every 30 minutes
+            setInterval(simulateSales, 30 * 60 * 1000);
+            
+            // Also simulate some sales on page load (random timing)
+            setTimeout(() => {
+                if (Math.random() < 0.3) { // 30% chance
+                    simulateSales();
+                }
+            }, Math.random() * 5 * 60 * 1000); // Random time within 5 minutes
+        }
+        
+        // Waitlist function
+        function joinWaitlist() {
+            alert('Thank you for your interest! We\'ll add you to our priority waitlist and contact you as soon as we have availability. Please check your email for confirmation.');
+            
+            // Track waitlist signup
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'waitlist_signup', {
+                    event_category: 'engagement',
+                    event_label: 'daily_quota_reached'
+                });
+            }
+        }
+        
+        // Scroll to form function
+        function scrollToForm() {
+            const formSection = document.querySelector('.form-container');
+            if (formSection) {
+                formSection.scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+                
+                // Track urgency click
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'urgency_click', {
+                        event_category: 'engagement',
+                        event_label: 'scroll_to_form'
+                    });
+                }
             }
         }
     </script>
